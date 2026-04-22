@@ -2,16 +2,89 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <TextView
-        android:id="@+id/text_camera"
+        android:id="@+id/textCameraMode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Camera Control"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="模式: PHOTO"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toEndOf="@id/textCameraMode"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnTakePhoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/circle_button"
+        android:text="拍照"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@id/zoomPanel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/recordingIndicator"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/circle_red"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/btnRecord"
+        app:layout_constraintEnd_toStartOf="@id/btnRecord" />
+
+    <Button
+        android:id="@+id/btnRecord"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:background="@drawable/circle_button"
+        android:text="录像"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnTakePhoto"
+        app:layout_constraintBottom_toTopOf="@id/zoomPanel" />
+
+    <LinearLayout
+        android:id="@+id/zoomPanel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1x"
+            android:textSize="12sp" />
+
+        <SeekBar
+            android:id="@+id/seekBarZoom"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:max="100"
+            android:progress="0" />
+
+        <TextView
+            android:id="@+id/textZoomMax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="10x"
+            android:textSize="12sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
