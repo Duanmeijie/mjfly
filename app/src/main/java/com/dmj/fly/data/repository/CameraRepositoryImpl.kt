@@ -6,10 +6,7 @@ import com.dmj.fly.domain.model.CameraState
 import com.dmj.fly.domain.model.Result
 import com.dmj.fly.domain.repository.CameraRepository
 import dji.sdk.keyvalue.key.CameraKey
-import dji.sdk.keyvalue.key.GimbalKey
 import dji.sdk.keyvalue.value.camera.CameraModeType
-import dji.sdk.keyvalue.value.camera.CameraRecordingState
-import dji.sdk.keyvalue.value.camera.CameraStorageInfo
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -18,35 +15,37 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class CameraRepositoryImpl @Inject constructor() : CameraRepository {
+class CameraRepositoryImpl @Inject constructor(
+    private val keyManagerHelper: KeyManagerHelper
+) : CameraRepository {
 
     override suspend fun shootPhoto(): Result<Unit> {
-        return KeyManagerHelper.actionKey(CameraKey.KeyShootPhotoAction)
+        return keyManagerHelper.setKey(CameraKey.KeyStartShootPhoto, true)
             .onFailure { Timber.e("shootPhoto failed: ${it.message}") }
     }
 
     override suspend fun startRecord(): Result<Unit> {
-        return KeyManagerHelper.actionKey(CameraKey.KeyStartRecordAction)
+        return keyManagerHelper.setKey(CameraKey.KeyStartRecord, true)
             .onFailure { Timber.e("startRecord failed: ${it.message}") }
     }
 
     override suspend fun stopRecord(): Result<Unit> {
-        return KeyManagerHelper.actionKey(CameraKey.KeyStopRecordAction)
+        return keyManagerHelper.setKey(CameraKey.KeyStopRecord, true)
             .onFailure { Timber.e("stopRecord failed: ${it.message}") }
     }
 
     override suspend fun setMode(mode: CameraMode): Result<Unit> {
         val djiMode = when (mode) {
-            CameraMode.PHOTO -> CameraModeType.PHOTO
-            CameraMode.VIDEO -> CameraModeType.VIDEO
+            CameraMode.PHOTO -> CameraModeType.SHOOT_PHOTO
+            CameraMode.VIDEO -> CameraModeType.RECORD_VIDEO
             CameraMode.UNKNOWN -> CameraModeType.UNKNOWN
         }
-        return KeyManagerHelper.setKey(CameraKey.KeyCameraMode, djiMode)
+        return keyManagerHelper.setKey(CameraKey.KeyCameraMode, djiMode)
             .onFailure { Timber.e("setMode failed: ${it.message}") }
     }
 
     override suspend fun setZoom(zoomFactor: Float): Result<Unit> {
-        return KeyManagerHelper.setKey(CameraKey.KeyCameraZoomRatios, zoomFactor)
+        return keyManagerHelper.setKey(CameraKey.KeyCameraZoomRatios, zoomFactor)
             .onFailure { Timber.e("setZoom failed: ${it.message}") }
     }
 
@@ -55,19 +54,19 @@ class CameraRepositoryImpl @Inject constructor() : CameraRepository {
         val recordingKey = CameraKey.KeyRecordingState
         val storageKey = CameraKey.KeySDCardAvailableSpace
 
-        val modeFlow = KeyManagerHelper.listenKey<CameraModeType>(modeKey).map { type ->
+        val modeFlow = keyManagerHelper.listenKey(modeKey).map { type ->
             when (type) {
-                CameraModeType.PHOTO -> CameraMode.PHOTO
-                CameraModeType.VIDEO -> CameraMode.VIDEO
+                CameraModeType.SHOOT_PHOTO -> CameraMode.PHOTO
+                CameraModeType.RECORD_VIDEO -> CameraMode.VIDEO
                 else -> CameraMode.UNKNOWN
             }
         }
-        
-        val recordingFlow = KeyManagerHelper.listenKey<CameraRecordingState>(recordingKey).map { state ->
+
+        val recordingFlow = keyManagerHelper.listenKey(recordingKey).map { state ->
             state.isRecording
         }
 
-        val storageFlow = KeyManagerHelper.listenKey<CameraStorageInfo>(storageKey).map { info ->
+        val storageFlow = keyManagerHelper.listenKey(storageKey).map { info ->
             info.availableCapacity.toInt()
         }
 

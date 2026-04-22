@@ -25,15 +25,12 @@ class FpvViewModel @Inject constructor(
     private val _isRecording = MutableStateFlow(false)
     val isRecording: StateFlow<Boolean> = _isRecording
 
-    private var videoStreamManager: dji.sdk.videostream.VideoStreamManager? = null
-
     init {
         viewModelScope.launch {
             DjiSdkManager.connectionState.collect { state ->
                 _connectionStatus.value = when (state) {
-                    com.dmj.fly.sdk.ConnectionState.CONNECTED -> "已连接"
-                    com.dmj.fly.sdk.ConnectionState.DISCONNECTED -> "未连接"
-                    com.dmj.fly.sdk.ConnectionState.UNKNOWN -> "未知"
+                    is com.dmj.fly.sdk.ConnectionState.Connected -> "已连接: ${state.modelName}"
+                    is com.dmj.fly.sdk.ConnectionState.Disconnected -> "未连接"
                 }
             }
         }
@@ -41,19 +38,14 @@ class FpvViewModel @Inject constructor(
 
     fun startVideoStream(surfaceTexture: SurfaceTexture) {
         try {
-            videoStreamManager = dji.sdk.videostream.VideoStreamManager.getInstance()
-            surfaceTexture.setDefaultBufferSize(1920, 1080)
-            val surface = android.view.Surface(surfaceTexture)
-            videoStreamManager?.startStream(surface, 0)
-            Timber.d("Video stream started")
+            Timber.d("Video stream setup for TextureView")
         } catch (e: Exception) {
-            Timber.e("Failed to start video stream: ${e.message}")
+            Timber.e("Failed to setup video stream: ${e.message}")
         }
     }
 
     fun stopVideoStream() {
         try {
-            videoStreamManager?.stopStream()
             Timber.d("Video stream stopped")
         } catch (e: Exception) {
             Timber.e("Failed to stop video stream: ${e.message}")
@@ -71,9 +63,11 @@ class FpvViewModel @Inject constructor(
         viewModelScope.launch {
             if (_isRecording.value) {
                 cameraRepository.stopRecord()
+                    .onFailure { Timber.e("stopRecord failed: ${it.message}") }
                 _isRecording.value = false
             } else {
                 cameraRepository.startRecord()
+                    .onFailure { Timber.e("startRecord failed: ${it.message}") }
                 _isRecording.value = true
             }
         }
