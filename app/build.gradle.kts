@@ -62,15 +62,15 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-android-compiler:2.51")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    implementation("com.dji:dji-sdk-v5:5.9.0")
-    implementation("com.dji:dji-sdk-v5-aircraft:5.9.0")
-    implementation("com.dji:dji-sdk-v5-networkImp:5.9.0")
+    implementation("com.dji:dji-sdk-v5-aircraft:5.10.0")
+    compileOnly("com.dji:dji-sdk-v5-aircraft-provided:5.10.0")
+    runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.10.0")
 
     implementation("com.jakewharton.timber:timber:5.0.1")
 }
