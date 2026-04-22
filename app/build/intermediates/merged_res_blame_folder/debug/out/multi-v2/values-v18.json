@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.dmj.fly.app-mergeDebugResources-52:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\14472\\.gradle\\caches\\transforms-3\\02e1970c288c2b89280c135986c9116a\\transformed\\appcompat-1.6.1\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                }
+            ]
+        }
+    ]
+}
