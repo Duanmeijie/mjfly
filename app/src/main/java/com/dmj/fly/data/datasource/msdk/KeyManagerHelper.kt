@@ -1,75 +1,50 @@
 package com.dmj.fly.data.datasource.msdk
 
-import dji.sdk.keyvalue.key.KeyTools
-import dji.sdk.keyvalue.key.DJIKey
-import dji.sdk.keyvalue.value.base.DJIValue
+import dji.sdk.keyvalue.key.Key
+import dji.v5.common.callback.CommonCallbacks
+import dji.v5.common.error.IDJIError
+import dji.v5.manager.KeyManager
+import com.dmj.fly.domain.model.Result
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.suspendCancellableCoroutine
-import timber.log.Timber
 import kotlin.coroutines.resume
-import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
+import javax.inject.Inject
+import javax.inject.Singleton
 
-object KeyManagerHelper {
+@Singleton
+class KeyManagerHelper @Inject constructor() {
 
-    fun <T : DJIValue> listenKey(key: DJIKey<T>): Flow<T> = callbackFlow {
-        val listener = dji.sdk.keyvalue.key.listener.DJIKeyDataCallBack { _, newValue, _ ->
-            newValue?.let { value ->
-                trySend(value as T)
-            }
+    private val keyManager = KeyManager.getInstance()
+
+    fun <T> listenKey(key: Key<T>): Flow<T> = callbackFlow {
+        val listener = CommonCallbacks.KeyListener<T> { _, newValue ->
+            newValue?.let { trySend(it) }
         }
-
-        val result = dji.sdk.keyvalue.key.KeyManager.getInstance().addListener(key, listener)
-        if (!result) {
-            Timber.e("Failed to add listener for key: $key")
-            close()
-        }
-
-        awaitClose {
-            dji.sdk.keyvalue.key.KeyManager.getInstance().removeListener(key, listener)
-        }
+        keyManager.listen(key, this@KeyManagerHelper, listener)
+        awaitClose { keyManager.cancelListen(key, listener) }
     }
 
-    suspend fun <T : DJIValue> getKey(key: DJIKey<T>): T? = suspendCancellableCoroutine { continuation ->
-        val result = dji.sdk.keyvalue.key.KeyManager.getInstance().getValue(key) { errorCode, value ->
-            if (errorCode == 0 && value != null) {
-                continuation.resume(value as T)
-            } else {
-                Timber.e("getKey failed: errorCode=$errorCode")
+    suspend fun <T> getKey(key: Key<T>): T? = suspendCoroutine { continuation ->
+        keyManager.getValue(key, object : CommonCallbacks.CompletionCallback<T> {
+            override fun onSuccess(value: T) {
+                continuation.resume(value)
+            }
+            override fun onFailure(error: IDJIError) {
                 continuation.resume(null)
             }
-        }
-        if (!result) {
-            continuation.resume(null)
-        }
+        })
     }
 
-    suspend fun <T : DJIValue> setKey(key: DJIKey<T>, value: T): Result<Unit> = suspendCancellableCoroutine { continuation ->
-        val result = dji.sdk.keyvalue.key.KeyManager.getInstance().setValue(key, value) { errorCode ->
-            if (errorCode == 0) {
-                continuation.resume(Result.success(Unit))
-            } else {
-                Timber.e("setKey failed: errorCode=$errorCode")
-                continuation.resume(Result.failure(Exception("Failed to set key, error: $errorCode")))
+    suspend fun <T> setKey(key: Key<T>, value: T): Result<Unit> = suspendCoroutine { continuation ->
+        keyManager.setValue(key, value, object : CommonCallbacks.CompletionCallback<Void> {
+            override fun onSuccess(unused: Void?) {
+                continuation.resume(Result.Success(Unit))
             }
-        }
-        if (!result) {
-            continuation.resume(Result.failure(Exception("Failed to set key")))
-        }
-    }
-
-    suspend fun <T : DJIValue> actionKey(key: DJIKey<T>): Result<Unit> = suspendCancellableCoroutine { continuation ->
-        val result = dji.sdk.keyvalue.key.KeyManager.getInstance().performAction(key) { errorCode ->
-            if (errorCode == 0) {
-                continuation.resume(Result.success(Unit))
-            } else {
-                Timber.e("actionKey failed: errorCode=$errorCode")
-                continuation.resume(Result.failure(Exception("Failed to perform action, error: $errorCode")))
+            override fun onFailure(error: IDJIError) {
+                continuation.resume(Result.Error(error.description()))
             }
-        }
-        if (!result) {
-            continuation.resume(Result.failure(Exception("Failed to perform action")))
-        }
+        })
     }
 }
