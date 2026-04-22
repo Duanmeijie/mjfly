@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/fpvFragment">
+
+    <fragment
+        android:id="@+id/fpvFragment"
+        android:name="com.dmj.fly.ui.fpv.FpvFragment"
+        android:label="FPV" />
+
+    <fragment
+        android:id="@+id/controlFragment"
+        android:name="com.dmj.fly.ui.control.ControlFragment"
+        android:label="控制" />
+
+    <fragment
+        android:id="@+id/telemetryFragment"
+        android:name="com.dmj.fly.ui.telemetry.TelemetryFragment"
+        android:label="遥测" />
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.dmj.fly.ui.camera.CameraFragment"
+        android:label="相机" />
+
+    <fragment
+        android:id="@+id/mediaFragment"
+        android:name="com.dmj.fly.ui.media.MediaFragment"
+        android:label="媒体" />
+
+</navigation>

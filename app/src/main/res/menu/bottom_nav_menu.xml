@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/fpvFragment"
+        android:icon="@android:drawable/ic_menu_camera"
+        android:title="FPV" />
+
+    <item
+        android:id="@+id/controlFragment"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="控制" />
+
+    <item
+        android:id="@+id/telemetryFragment"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:title="遥测" />
+
+    <item
+        android:id="@+id/cameraFragment"
+        android:icon="@android:drawable/ic_menu_gallery"
+        android:title="相机" />
+
+    <item
+        android:id="@+id/mediaFragment"
+        android:icon="@android:drawable/ic_menu_slideshow"
+        android:title="媒体" />
+
+</menu>
