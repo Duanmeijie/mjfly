@@ -1,62 +1,47 @@
 package com.dmj.fly.sdk
 
 import android.content.Context
-import dji.sdk.sdkmanager.DJISDKManager
+import dji.sdk.products.Aircraft
+import dji.sdk.base.BaseProduct
+import dji.v5.common.error.IDJIError
+import dji.v5.manager.SDKManager
+import dji.v5.manager.interfaces.SDKManagerCallback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import timber.log.Timber
 
-enum class ConnectionState {
-    DISCONNECTED,
-    CONNECTED,
-    UNKNOWN
+sealed class ConnectionState {
+    data object Disconnected : ConnectionState()
+    data class Connected(val modelName: String) : ConnectionState()
 }
 
 object DjiSdkManager {
 
-    private var sdkManager: DJISDKManager? = null
-    private var aircraft: Aircraft? = null
-
-    private val _isRegistered = MutableStateFlow(false)
-    val isRegistered: StateFlow<Boolean> = _isRegistered
-
-    private val _connectionState = MutableStateFlow(ConnectionState.DISCONNECTED)
+    private val _connectionState = MutableStateFlow<ConnectionState>(ConnectionState.Disconnected)
     val connectionState: StateFlow<ConnectionState> = _connectionState
 
     fun initialize(context: Context) {
-        sdkManager = DJISDKManager.getInstance()
-        sdkManager?.init(context, object : DJISDKManager.SDKManagerCallback {
+        SDKManager.getInstance().init(context, object : SDKManagerCallback {
             override fun onRegisterSuccess() {
-                _isRegistered.value = true
-                Timber.d("DJI SDK registered successfully")
+                SDKManager.getInstance().startConnectionToProduct()
             }
 
-            override fun onRegisterFailure(errorCode: Int) {
-                _isRegistered.value = false
-                Timber.e("DJI SDK registration failed: $errorCode")
+            override fun onRegisterFailure(error: IDJIError) {
             }
 
-            override fun onProductConnect(product: Any?) {
-                aircraft = product as? Aircraft
-                _connectionState.value = ConnectionState.CONNECTED
-                Timber.d("Product connected: ${product?.javaClass?.simpleName}")
+            override fun onProductConnect(product: BaseProduct) {
+                _connectionState.value = ConnectionState.Connected(product.modelName)
             }
 
             override fun onProductDisconnect() {
-                aircraft = null
-                _connectionState.value = ConnectionState.DISCONNECTED
-                Timber.d("Product disconnected")
+                _connectionState.value = ConnectionState.Disconnected
             }
 
-            override fun onDatabaseError(errorCode: Int) {
-                Timber.e("Database error: $errorCode")
+            override fun onProductChanged(product: BaseProduct) {
             }
         })
     }
 
-    fun startConnectionToProduct() {
-        sdkManager?.startConnectionToProduct()
+    fun getAircraft(): Aircraft? {
+        return SDKManager.getInstance().product as? Aircraft
     }
-
-    fun getAircraft(): Aircraft? = aircraft
 }
