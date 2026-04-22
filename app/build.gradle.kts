@@ -69,9 +69,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
-    implementation("com.dji:dji-sdk-v5-aircraft:5.10.0")
-    compileOnly("com.dji:dji-sdk-v5-aircraft-provided:5.10.0")
-    runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.10.0")
+    implementation("com.dji:dji-sdk-v5-aircraft:5.17.0")
+    compileOnly("com.dji:dji-sdk-v5-aircraft-provided:5.17.0")
+    runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.17.0")
 
     implementation("com.jakewharton.timber:timber:5.0.1")
 }
