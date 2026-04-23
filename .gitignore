@@ -1,0 +1,30 @@
+# Build outputs
+/build/
+/app/build/
+/app/release/
+
+# Gradle caches and wrapper
+.gradle/
+gradle/wrapper/*.jar
+
+# Local configuration
+local.properties
+*.keystore
+*.jks
+
+# Generated files
+*.class
+*.jar
+*.log
+
+# Native libraries
+*.so
+
+# IntelliJ
+.idea/
+*.iml
+out/
+
+# Android Studio
+*.apk
+*.aab
