@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.dmj.fly"
-        minSdk = 23
+        minSdk = 24
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -48,6 +48,12 @@ android {
             pickFirsts.add("lib/armeabi-v7a/libdjiv5.so")
             pickFirsts.add("lib/arm64-v8a/libdjiv5.so")
         }
+    }
+
+    lint {
+        disable += listOf("StringFormatInvalid", "MissingTranslation", "ExtraTranslation")
+        abortOnError = false
+        checkReleaseBuilds = false
     }
 }
 

@@ -28,49 +28,49 @@
              "keyName" : "KeyCameraModeRange",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]      
+               ]
            },
            {
              "keyName" : "KeyCameraMode",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]      
-           },            
+               ]
+           },
            {
              "keyName" : "KeyIsShootingPhoto",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyStartShootPhoto",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyStopShootPhoto",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCaptureCameraStreamSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyPhotoFileFormatRange",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyPhotoFileFormat",
              "supportedLens": [
                 "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
              {
                "keyName" : "KeyPhotoSize",
@@ -82,43 +82,43 @@
              "keyName" : "KeyPhotoIntervalShootSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyPhotoIntervalCountdown",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },    
+               ]
+           },
            {
              "keyName" : "KeySuperResolutionInfo",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },               
+               ]
+           },
            {
              "keyName" : "KeySuperResolutionCaptureArea",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },    
+               ]
+           },
            {
              "keyName" : "KeyPhotoPanoramaMode",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },    
+               ]
+           },
            {
              "keyName" : "KeyIsShootingPhotoPanorama",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },               
+               ]
+           },
            {
              "keyName" : "KeyPhotoPanoramaProgress",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
            "keyName" : "KeyIsRecording",
@@ -130,38 +130,38 @@
              "keyName" : "KeyStartRecord",
              "supportedLens": [
               "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyStopRecord",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
 
            {
              "keyName" : "KeyRecordingTime",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },  
+               ]
+           },
            {
              "keyName" : "KeyRecordCameraStreamSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyVideoFileFormatRange",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyVideoFileFormat",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
              {
                "keyName" : "KeyVideoRecordPlan",
@@ -185,73 +185,73 @@
              "keyName" : "KeyNewlyGeneratedMediaFile",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
-           },                    
+               ]
+           },
            {
              "keyName" : "KeyCustomExpandDirectoryNameSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCustomExpandFileNameSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraStorageInfos",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraVideoCaptionEnabled",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraWatermarkSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyWatermarkDisplayContentSettings",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyWatermarkUserCustomInfo",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyLockGimbalDuringShootPhotoEnabled",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyAutoTurnOffLEDMode",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyLaserWorkMode",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyLaserMeasureEnabled",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
              {
                "keyName" : "KeyLaserMeasureInformation",
@@ -259,7 +259,6 @@
                  "CAMERA_LENS_DEFAULT"
                ]
              },
-
              {
                "keyName" : "KeyCameraNightSceneMode",
                "supportedLens": [
@@ -285,6 +284,18 @@
                ]
              },
              {
+               "keyName" : "KeyDehazeMode",
+               "supportedLens": [
+                 "CAMERA_LENS_DEFAULT"
+               ]
+             },
+             {
+               "keyName" : "KeyDehazeLevel",
+               "supportedLens": [
+                 "CAMERA_LENS_DEFAULT"
+               ]
+             },
+             {
                "keyName" : "KeyCameraVideoStreamSourceRange",
                "supportedLens": [
                  "CAMERA_LENS_DEFAULT"
@@ -300,31 +311,31 @@
              "keyName" : "KeyExposureModeRange",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyExposureMode",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyExposureCompensationRange",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyExposureCompensation",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyAELockEnabled",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
              {
                "keyName" : "KeyCameraMeteringMode",
@@ -342,104 +353,110 @@
              "keyName" : "KeyISORange",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyISO",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyShutterSpeedRange",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyShutterSpeed",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyPhotoRatioRange",
              "supportedLens": [
                 "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyPhotoRatio",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyVideoResolutionFrameRateRange",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyVideoResolutionFrameRate",
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
-               ]     
+               ]
+           },
+           {
+             "keyName" : "KeyCameraZoomRatiosRange",
+             "supportedLens": [
+                 "CAMERA_LENS_DEFAULT"
+             ]
            },
            {
             "keyName" : "KeyCameraZoomRatios",
             "supportedLens": [
               "CAMERA_LENS_ZOOM"
-              ]     
+              ]
            },
            {
             "keyName" : "KeyCameraZoomFocalLength",
            "supportedLens": [
              "CAMERA_LENS_ZOOM"
-              ]     
+              ]
            },
            {
              "keyName" : "KeyCameraFocusMode",
              "supportedLens": [
                "CAMERA_LENS_ZOOM"
-               ]     
+               ]
            },
-       
+
            {
              "keyName" : "KeyCameraFocusRingMinValue",
              "supportedLens": [
                "CAMERA_LENS_ZOOM"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraFocusRingMaxValue",
              "supportedLens": [
                "CAMERA_LENS_ZOOM"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraFocusRingValue",
              "supportedLens": [
                "CAMERA_LENS_ZOOM"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyCameraFocusTarget",
              "supportedLens": [
                "CAMERA_LENS_ZOOM"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyResetCameraSetting",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            },
            {
              "keyName" : "KeyFormatStorage",
              "supportedLens": [
                "CAMERA_LENS_DEFAULT"
-               ]     
+               ]
            }
           ]
     }

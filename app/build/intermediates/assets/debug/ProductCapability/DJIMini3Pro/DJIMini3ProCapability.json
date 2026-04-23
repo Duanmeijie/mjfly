@@ -5,7 +5,7 @@
   "airLink": [
     {
       "productType": "DJI_MINI_3_PRO_AIRLINK",
-      "capabilityFile": "DJIMini3/DJIMini3AirLinkCapability.json"
+      "capabilityFile": "DJIMini3Pro/DJIMini3ProAirLinkCapability.json"
     }
   ],
   "camera": [
@@ -14,7 +14,7 @@
       "supportedComponentIndexType": [
         "LEFT_OR_MAIN"
       ],
-      "capabilityFile": "DJIMini3/DJIMini3CameraCapability.json"
+      "capabilityFile": "DJIMini3Pro/DJIMini3ProCameraCapability.json"
     }
   ],
   "gimbal": [
@@ -23,7 +23,7 @@
       "supportedComponentIndexType": [
         "LEFT_OR_MAIN"
       ],
-      "capabilityFile": "DJIMini3/DJIMini3GimbalCapability.json"
+      "capabilityFile": "DJIMini3Pro/DJIMini3ProGimbalCapability.json"
     }
   ],
   "remoteController": [
@@ -39,13 +39,13 @@
   "flightController": [
     {
       "productType": "DJI_MINI_3_PRO_FC",
-      "capabilityFile": "DJIMini3/DJIMini3FlightControllerCapability.json"
+      "capabilityFile": "DJIMini3Pro/DJIMini3ProFlightControllerCapability.json"
     }
   ],
   "battery": [
     {
       "productType": "DJI_MINI_3_PRO_BATTERY",
-      "capabilityFile": "DJIMini3/DJIMini3GimbalCapability.json"
+      "capabilityFile": "DJIMini3Pro/DJIMini3ProBatteryCapability.json"
     }
   ],
   "userAccount": {

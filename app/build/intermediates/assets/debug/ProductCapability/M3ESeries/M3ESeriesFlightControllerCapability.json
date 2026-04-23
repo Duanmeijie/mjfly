@@ -189,6 +189,9 @@
           {
             "keyName" : "KeyHomeLocation"
           },
+           {
+             "keyName" : "KeyGoHomePathMode"
+           },
           {
             "keyName" : "KeyGoHomeHeight"
           },

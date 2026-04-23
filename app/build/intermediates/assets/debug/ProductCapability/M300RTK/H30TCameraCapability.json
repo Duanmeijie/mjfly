@@ -285,6 +285,18 @@
                ]
              },
              {
+               "keyName" : "KeyDehazeMode",
+               "supportedLens": [
+                 "CAMERA_LENS_DEFAULT"
+               ]
+             },
+             {
+               "keyName" : "KeyDehazeLevel",
+               "supportedLens": [
+                 "CAMERA_LENS_DEFAULT"
+               ]
+             },
+             {
                "keyName" : "KeyCameraVideoStreamSourceRange",
                "supportedLens": [
                  "CAMERA_LENS_DEFAULT"
@@ -385,6 +397,12 @@
              "supportedLens": [
                "CAMERA_LENS_ZOOM","CAMERA_LENS_WIDE"
                ]     
+           },
+           {
+             "keyName" : "KeyCameraZoomRatiosRange",
+             "supportedLens": [
+                "CAMERA_LENS_DEFAULT"
+             ]
            },
            {
             "keyName" : "KeyCameraZoomRatios",

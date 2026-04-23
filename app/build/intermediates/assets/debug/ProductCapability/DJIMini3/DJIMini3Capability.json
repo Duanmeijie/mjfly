@@ -41,7 +41,7 @@
   "battery": [
     {
       "productType": "DJI_MINI_3_BATTERY",
-      "capabilityFile": "DJIMini3/DJIMini3GimbalCapability.json"
+      "capabilityFile": "DJIMini3/DJIMini3BatteryCapability.json"
     }
   ],
   "userAccount": {

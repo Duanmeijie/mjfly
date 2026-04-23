@@ -29,6 +29,13 @@
         "LEFT_OR_MAIN"
       ],
       "capabilityFile": "M3ESeries/M3MCameraCapability.json"
+    },
+    {
+      "productType": "M3TA",
+      "supportedComponentIndexType": [
+        "LEFT_OR_MAIN"
+      ],
+      "capabilityFile": "M3ESeries/M3TACameraCapability.json"
     }
   ],
   "gimbal": [

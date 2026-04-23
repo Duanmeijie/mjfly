@@ -20,11 +20,11 @@
         "source": "com.dmj.fly.app-main-56:/layout/fragment_telemetry.xml"
     },
     {
-        "merged": "com.dmj.fly.app-mergeDebugResources-53:/layout/fragment_fpv.xml",
-        "source": "com.dmj.fly.app-main-56:/layout/fragment_fpv.xml"
-    },
-    {
         "merged": "com.dmj.fly.app-mergeDebugResources-53:/layout/fragment_control.xml",
         "source": "com.dmj.fly.app-main-56:/layout/fragment_control.xml"
+    },
+    {
+        "merged": "com.dmj.fly.app-mergeDebugResources-53:/layout/fragment_fpv.xml",
+        "source": "com.dmj.fly.app-main-56:/layout/fragment_fpv.xml"
     }
 ]
