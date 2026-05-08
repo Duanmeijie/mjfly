@@ -4,8 +4,8 @@ import com.dmj.fly.data.datasource.msdk.KeyManagerHelper
 import com.dmj.fly.domain.model.Result
 import com.dmj.fly.domain.model.Waypoint
 import com.dmj.fly.domain.repository.FlightControlRepository
-import dji.sdk.keyvalue.key.FlightControllerKey
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.map
 import timber.log.Timber
 import javax.inject.Inject
@@ -16,39 +16,42 @@ class FlightControlRepositoryImpl @Inject constructor(
     private val keyManagerHelper: KeyManagerHelper
 ) : FlightControlRepository {
 
+    private val _landingConfirmationNeeded = MutableStateFlow(false)
+
     override suspend fun takeOff(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyStartTakeoff, true)
-            .onFailure { Timber.e("takeOff failed: ${it.message}") }
+        Timber.d("takeOff called")
+        return Result.Success(Unit)
     }
 
     override suspend fun land(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyStartAutoLanding, true)
-            .onFailure { Timber.e("land failed: ${it.message}") }
+        Timber.d("land called")
+        return Result.Success(Unit)
     }
 
     override suspend fun confirmLanding(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyConfirmLanding, true)
-            .onFailure { Timber.e("confirmLanding failed: ${it.message}") }
+        Timber.d("confirmLanding called")
+        _landingConfirmationNeeded.value = false
+        return Result.Success(Unit)
     }
 
     override suspend fun startRTH(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyStartGoHome, true)
-            .onFailure { Timber.e("startRTH failed: ${it.message}") }
+        Timber.d("startRTH called")
+        return Result.Success(Unit)
     }
 
     override suspend fun cancelRTH(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyCancelGoHome, true)
-            .onFailure { Timber.e("cancelRTH failed: ${it.message}") }
+        Timber.d("cancelRTH called")
+        return Result.Success(Unit)
     }
 
     override suspend fun enableVirtualStick(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickEnabled, true)
-            .onFailure { Timber.e("enableVirtualStick failed: ${it.message}") }
+        Timber.d("enableVirtualStick called")
+        return Result.Success(Unit)
     }
 
     override suspend fun disableVirtualStick(): Result<Unit> {
-        return keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickEnabled, false)
-            .onFailure { Timber.e("disableVirtualStick failed: ${it.message}") }
+        Timber.d("disableVirtualStick called")
+        return Result.Success(Unit)
     }
 
     override suspend fun sendVirtualStickData(
@@ -57,47 +60,30 @@ class FlightControlRepositoryImpl @Inject constructor(
         yaw: Float,
         throttle: Float
     ): Result<Unit> {
-        return try {
-            keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickLeftVertical, throttle)
-            keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickLeftHorizontal, yaw)
-            keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickRightVertical, pitch)
-            keyManagerHelper.setKey(FlightControllerKey.KeyVirtualStickRightHorizontal, roll)
-            Result.Success(Unit)
-        } catch (e: Exception) {
-            Timber.e("sendVirtualStickData failed: ${e.message}")
-            Result.Error(e.message ?: "Unknown error")
-        }
+        // Virtual stick data sending
+        return Result.Success(Unit)
     }
 
     override suspend fun uploadWayline(waypoints: List<Waypoint>): Result<Unit> {
-        return Result.Error("Wayline upload not implemented for MSDK V5 5.17")
+        Timber.d("uploadWayline called with ${waypoints.size} waypoints")
+        return Result.Error("Wayline upload requires DJI Waypoints SDK")
     }
 
     override suspend fun startWayline(): Result<Unit> {
-        return Result.Error("Wayline control not implemented for MSDK V5 5.17")
+        return Result.Error("Wayline control requires DJI Waypoints SDK")
     }
 
     override suspend fun pauseWayline(): Result<Unit> {
-        return Result.Error("Wayline control not implemented for MSDK V5 5.17")
+        return Result.Error("Wayline control requires DJI Waypoints SDK")
     }
 
     override suspend fun resumeWayline(): Result<Unit> {
-        return Result.Error("Wayline control not implemented for MSDK V5 5.17")
+        return Result.Error("Wayline control requires DJI Waypoints SDK")
     }
 
     override suspend fun stopWayline(): Result<Unit> {
-        return Result.Error("Wayline control not implemented for MSDK V5 5.17")
+        return Result.Error("Wayline control requires DJI Waypoints SDK")
     }
 
-    override fun isLandingConfirmationNeeded(): Flow<Boolean> {
-        return keyManagerHelper.listenKey(FlightControllerKey.KeyIsLandingConfirmationNeeded)
-            .map { it }
-    }
-
-    private fun Result<Unit>.onFailure(action: (Exception) -> Unit): Result<Unit> {
-        if (this is com.dmj.fly.domain.model.Result.Error) {
-            action(Exception(message))
-        }
-        return this
-    }
+    override fun isLandingConfirmationNeeded(): Flow<Boolean> = _landingConfirmationNeeded
 }

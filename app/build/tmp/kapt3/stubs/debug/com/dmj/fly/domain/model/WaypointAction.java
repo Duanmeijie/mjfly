@@ -10,7 +10,7 @@ public enum WaypointAction {
     WaypointAction() {
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public static kotlin.enums.EnumEntries<com.dmj.fly.domain.model.WaypointAction> getEntries() {
         return null;
     }

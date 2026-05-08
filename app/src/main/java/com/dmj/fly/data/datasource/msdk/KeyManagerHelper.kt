@@ -1,50 +1,48 @@
 package com.dmj.fly.data.datasource.msdk
 
-import dji.sdk.keyvalue.key.Key
-import dji.v5.common.callback.CommonCallbacks
-import dji.v5.common.error.IDJIError
-import dji.v5.manager.KeyManager
+import com.dmj.fly.sdk.DjiSdkManager
 import com.dmj.fly.domain.model.Result
-import kotlinx.coroutines.channels.awaitClose
+import dji.sdk.keyvalue.key.DJIKey
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * KeyManager 帮助类
+ * 封装 DJI SDK 5.17.0 的 Key 访问方式
+ *
+ * ⚠️ 真机测试警告:以下功能需在连接真实 DJI 设备、SDK 注册成功后测试
+ */
 @Singleton
 class KeyManagerHelper @Inject constructor() {
 
-    private val keyManager = KeyManager.getInstance()
-
-    fun <T> listenKey(key: Key<T>): Flow<T> = callbackFlow {
-        val listener = CommonCallbacks.KeyListener<T> { _, newValue ->
-            newValue?.let { trySend(it) }
-        }
-        keyManager.listen(key, this@KeyManagerHelper, listener)
-        awaitClose { keyManager.cancelListen(key, listener) }
+    /**
+     * 监听 Key 变化
+     * @param key DJIKey 实例
+     * @return Flow<T> 实时数据流
+     */
+    fun <T> listenKey(key: DJIKey<T>): Flow<T> {
+        return DjiSdkManager.listenKey(key)
     }
 
-    suspend fun <T> getKey(key: Key<T>): T? = suspendCoroutine { continuation ->
-        keyManager.getValue(key, object : CommonCallbacks.CompletionCallback<T> {
-            override fun onSuccess(value: T) {
-                continuation.resume(value)
-            }
-            override fun onFailure(error: IDJIError) {
-                continuation.resume(null)
-            }
-        })
+    /**
+     * 获取 Key 当前值
+     * @param key DJIKey 实例
+     * @return T? 当前值，失败返回 null
+     */
+    suspend fun <T> getKey(key: DJIKey<T>): T? {
+        return DjiSdkManager.getKey(key)
     }
 
-    suspend fun <T> setKey(key: Key<T>, value: T): Result<Unit> = suspendCoroutine { continuation ->
-        keyManager.setValue(key, value, object : CommonCallbacks.CompletionCallback<Void> {
-            override fun onSuccess(unused: Void?) {
-                continuation.resume(Result.Success(Unit))
-            }
-            override fun onFailure(error: IDJIError) {
-                continuation.resume(Result.Error(error.description()))
-            }
-        })
+    /**
+     * 设置 Key 值
+     * @param key DJIKey 实例
+     * @param value 要设置的值
+     * @return Result<Unit> 操作结果
+     *
+     * ⚠️ 真机测试警告:涉及飞控、相机等操作必须在连接真实 DJI 设备且环境安全条件下测试
+     */
+    suspend fun <T> setKey(key: DJIKey<T>, value: T): Result<Unit> {
+        return DjiSdkManager.setKey(key, value)
     }
 }

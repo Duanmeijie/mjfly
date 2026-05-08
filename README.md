@@ -70,8 +70,8 @@
 | `data/repository` | 仓储实现，调用 MSDK API |
 | `di` | Hilt 依赖注入模块 |
 | `sdk` | SDK 初始化管理 |
-| `ui` | 表现层：Fragment + ViewModel |
-| `util` | 工具类：权限、日志、常量 |
+| `ui` | 表现层:Fragment + ViewModel |
+| `util` | 工具类:权限、日志、常量 |
 
 ## 📋 前置条件与运行
 
@@ -84,12 +84,12 @@
 
 1. **配置 DJI App Key**
 
-   在 `app/src/main/java/com/dmj/fly/util/Constants.kt` 中修改：
+   在 `app/src/main/java/com/dmj/fly/util/Constants.kt` 中修改:
    ```kotlin
    const val DJI_APP_KEY = "YOUR_VALID_DJI_APP_KEY"
    ```
 
-   同时修改 `AndroidManifest.xml` 中的 meta-data：
+   同时修改 `AndroidManifest.xml` 中的 meta-data:
    ```xml
    <meta-data
        android:name="com.dji.sdk.API_KEY"
@@ -106,7 +106,7 @@
    - 开启开发者模式
    - 安装并运行 APK
 
-> ⚠️ 注意：DJI MSDK 需要真机调试，模拟器无法使用
+> ⚠️ 注意:DJI MSDK 需要真机调试，模拟器无法使用
 
 ## 📂 代码结构
 

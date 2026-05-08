@@ -1,7 +1,6 @@
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\util\Extension.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\data\repository\AircraftRepositoryImpl.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\util\Logger.kt
-D:\Projects\mjfly\app\src\main\java\com\dmj\fly\DmjFlyApplication.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\util\PermissionHelper.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\data\repository\CameraRepositoryImpl.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\data\datasource\msdk\KeyManagerHelper.kt
@@ -24,6 +23,7 @@ D:\Projects\mjfly\app\src\main\java\com\dmj\fly\ui\telemetry\TelemetryViewModel.
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\domain\repository\MediaRepository.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\domain\repository\LiveStreamRepository.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\ui\fpv\FpvViewModel.kt
+D:\Projects\mjfly\app\src\main\java\com\dmj\fly\FlyApplication.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\ui\telemetry\TelemetryFragment.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\util\Constants.kt
 D:\Projects\mjfly\app\src\main\java\com\dmj\fly\domain\model\CameraState.kt

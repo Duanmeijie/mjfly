@@ -2,7 +2,6 @@ package com.dmj.fly.ui.control
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.dmj.fly.domain.model.AircraftStatus
 import com.dmj.fly.domain.repository.AircraftRepository
 import com.dmj.fly.domain.repository.FlightControlRepository
 import com.dmj.fly.sdk.ConnectionState
@@ -57,9 +56,8 @@ class ControlViewModel @Inject constructor(
                 Pair(connectionState, status)
             }.collect { (connectionState, status) ->
                 val statusText = when (connectionState) {
-                    ConnectionState.CONNECTED -> "已连接"
-                    ConnectionState.DISCONNECTED -> "未连接"
-                    ConnectionState.UNKNOWN -> "未知"
+                    is ConnectionState.Connected -> "已连接: ${connectionState.modelName}"
+                    is ConnectionState.Disconnected -> "未连接"
                 }
                 _uiState.value = _uiState.value.copy(
                     connectionStatus = statusText,
@@ -105,7 +103,9 @@ class ControlViewModel @Inject constructor(
         virtualStickJob?.cancel()
         virtualStickJob = viewModelScope.launch {
             while (isActive) {
-                flightControlRepository.sendVirtualStickData(currentPitch, currentRoll, currentYaw, currentThrottle)
+                flightControlRepository.sendVirtualStickData(
+                    currentPitch, currentRoll, currentYaw, currentThrottle
+                )
                 delay(50)
             }
         }
@@ -119,21 +119,18 @@ class ControlViewModel @Inject constructor(
     fun takeOff() {
         viewModelScope.launch {
             flightControlRepository.takeOff()
-                .onFailure { Timber.e("takeOff failed: ${it.message}") }
         }
     }
 
     fun land() {
         viewModelScope.launch {
             flightControlRepository.land()
-                .onFailure { Timber.e("land failed: ${it.message}") }
         }
     }
 
-    fun startRTH() {
+    fun startRth() {
         viewModelScope.launch {
             flightControlRepository.startRTH()
-                .onFailure { Timber.e("startRTH failed: ${it.message}") }
         }
     }
 

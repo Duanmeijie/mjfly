@@ -10,7 +10,7 @@ public enum StreamType {
     StreamType() {
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public static kotlin.enums.EnumEntries<com.dmj.fly.domain.model.StreamType> getEntries() {
         return null;
     }

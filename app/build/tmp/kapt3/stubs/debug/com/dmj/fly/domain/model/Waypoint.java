@@ -6,14 +6,14 @@ public final class Waypoint {
     private final double longitude = 0.0;
     private final float altitude = 0.0F;
     private final float heading = 0.0F;
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     private final com.dmj.fly.domain.model.WaypointAction action = null;
     private final long actionTime = 0L;
     private final int turnMode = 0;
     private final float speed = 0.0F;
     private final float gimbalPitch = 0.0F;
     
-    public Waypoint(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull
+    public Waypoint(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull()
     com.dmj.fly.domain.model.WaypointAction action, long actionTime, int turnMode, float speed, float gimbalPitch) {
         super();
     }
@@ -34,7 +34,7 @@ public final class Waypoint {
         return 0.0F;
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.WaypointAction getAction() {
         return null;
     }
@@ -75,7 +75,7 @@ public final class Waypoint {
         return 0.0F;
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.WaypointAction component5() {
         return null;
     }
@@ -96,25 +96,25 @@ public final class Waypoint {
         return 0.0F;
     }
     
-    @org.jetbrains.annotations.NotNull
-    public final com.dmj.fly.domain.model.Waypoint copy(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.Waypoint copy(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull()
     com.dmj.fly.domain.model.WaypointAction action, long actionTime, int turnMode, float speed, float gimbalPitch) {
         return null;
     }
     
-    @java.lang.Override
-    public boolean equals(@org.jetbrains.annotations.Nullable
+    @java.lang.Override()
+    public boolean equals(@org.jetbrains.annotations.Nullable()
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override
+    @java.lang.Override()
     public int hashCode() {
         return 0;
     }
     
-    @java.lang.Override
-    @org.jetbrains.annotations.NotNull
+    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
     }

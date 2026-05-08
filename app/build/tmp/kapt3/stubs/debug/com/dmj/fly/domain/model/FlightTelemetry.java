@@ -110,24 +110,24 @@ public final class FlightTelemetry {
         return 0.0F;
     }
     
-    @org.jetbrains.annotations.NotNull
+    @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.FlightTelemetry copy(double latitude, double longitude, float relativeAltitude, float ultrasonicHeight, float takeoffAltitude, float pitch, float roll, float yaw, float velocityX, float velocityY, float velocityZ) {
         return null;
     }
     
-    @java.lang.Override
-    public boolean equals(@org.jetbrains.annotations.Nullable
+    @java.lang.Override()
+    public boolean equals(@org.jetbrains.annotations.Nullable()
     java.lang.Object other) {
         return false;
     }
     
-    @java.lang.Override
+    @java.lang.Override()
     public int hashCode() {
         return 0;
     }
     
-    @java.lang.Override
-    @org.jetbrains.annotations.NotNull
+    @java.lang.Override()
+    @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
     }

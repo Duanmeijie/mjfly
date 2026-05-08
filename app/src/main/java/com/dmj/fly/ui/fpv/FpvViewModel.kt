@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dmj.fly.domain.repository.CameraRepository
 import com.dmj.fly.domain.repository.FlightControlRepository
+import com.dmj.fly.sdk.ConnectionState
 import com.dmj.fly.sdk.DjiSdkManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,8 +30,8 @@ class FpvViewModel @Inject constructor(
         viewModelScope.launch {
             DjiSdkManager.connectionState.collect { state ->
                 _connectionStatus.value = when (state) {
-                    is com.dmj.fly.sdk.ConnectionState.Connected -> "已连接: ${state.modelName}"
-                    is com.dmj.fly.sdk.ConnectionState.Disconnected -> "未连接"
+                    is ConnectionState.Connected -> "已连接: ${state.modelName}"
+                    is ConnectionState.Disconnected -> "未连接"
                 }
             }
         }
@@ -55,7 +56,6 @@ class FpvViewModel @Inject constructor(
     fun takePhoto() {
         viewModelScope.launch {
             cameraRepository.shootPhoto()
-                .onFailure { Timber.e("takePhoto failed: ${it.message}") }
         }
     }
 
@@ -63,11 +63,9 @@ class FpvViewModel @Inject constructor(
         viewModelScope.launch {
             if (_isRecording.value) {
                 cameraRepository.stopRecord()
-                    .onFailure { Timber.e("stopRecord failed: ${it.message}") }
                 _isRecording.value = false
             } else {
                 cameraRepository.startRecord()
-                    .onFailure { Timber.e("startRecord failed: ${it.message}") }
                 _isRecording.value = true
             }
         }
@@ -76,14 +74,12 @@ class FpvViewModel @Inject constructor(
     fun takeOff() {
         viewModelScope.launch {
             flightControlRepository.takeOff()
-                .onFailure { Timber.e("takeOff failed: ${it.message}") }
         }
     }
 
     fun land() {
         viewModelScope.launch {
             flightControlRepository.land()
-                .onFailure { Timber.e("land failed: ${it.message}") }
         }
     }
 

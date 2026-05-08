@@ -4,9 +4,6 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dmj.fly.R
@@ -14,7 +11,6 @@ import com.dmj.fly.databinding.ActivityMainBinding
 import com.dmj.fly.sdk.DjiSdkManager
 import com.dmj.fly.util.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,7 +25,6 @@ class MainActivity : AppCompatActivity() {
 
         setupPermissionLauncher()
         setupNavigation()
-        observeSdkState()
         requestPermissions()
     }
 
@@ -39,7 +34,7 @@ class MainActivity : AppCompatActivity() {
         ) { permissions ->
             val allGranted = permissions.values.all { it }
             if (allGranted) {
-                DjiSdkManager.startConnectionToProduct()
+                initializeSdk()
             }
         }
     }
@@ -51,21 +46,14 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
-    private fun observeSdkState() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                DjiSdkManager.isRegistered.collect { isRegistered ->
-                    if (isRegistered) {
-                        DjiSdkManager.startConnectionToProduct()
-                    }
-                }
-            }
-        }
+    private fun initializeSdk() {
+        // SDK 已在 FlyApplication 中初始化，这里只需确保 DjiSdkManager 启动连接
+        DjiSdkManager.startConnectionToProduct()
     }
 
     private fun requestPermissions() {
         if (PermissionHelper.hasAllPermissions(this)) {
-            DjiSdkManager.startConnectionToProduct()
+            initializeSdk()
         } else {
             val missingPermissions = PermissionHelper.getMissingPermissions(this)
             permissionLauncher.launch(missingPermissions.toTypedArray())

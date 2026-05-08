@@ -12,5 +12,8 @@ data class CameraState(
     val isShootingPhoto: Boolean = false,
     val storageLocation: Int = 0,
     val availablePhotoCount: Int = 0,
-    val availableVideoDuration: Int = 0
+    val availableVideoDuration: Int = 0,
+    val zoomMin: Float = 1f,
+    val zoomMax: Float = 1f,
+    val currentZoom: Float = 1f
 )
