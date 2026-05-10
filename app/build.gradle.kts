@@ -21,19 +21,19 @@ android {
         }
     }
 
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+    }
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+        }
+        resources {
+            pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
+            pickFirsts.add("lib/arm64-v8a/libdjiv5.so")
+        }
     }
 
     kotlinOptions {
@@ -44,16 +44,6 @@ android {
         viewBinding = true
         dataBinding = true
         buildConfig = true
-    }
-
-    packaging {
-        resources {
-            pickFirsts.add("lib/arm64-v8a/libc++_shared.so")
-            pickFirsts.add("lib/arm64-v8a/libdjiv5.so")
-        }
-        jniLibs {
-            useLegacyPackaging = true
-        }
     }
 
     lint {
@@ -87,20 +77,14 @@ dependencies {
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
 
-    // DJI SDK V5 依赖配置（官方示例）
-    // api: 核心包，暴露 API 给其他模块
-    // compileOnly: provided 包，仅编译时使用，运行时不打包
-    // runtimeOnly: 网络实现包，运行时动态加载
+    // DJI SDK V5
     api("com.dji:dji-sdk-v5-aircraft:5.17.0")
-    compileOnly("com.dji:dji-sdk-v5-aircraft-provided:5.17.0")
+    implementation("com.dji:dji-sdk-v5-aircraft-provided:5.17.0")
     runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.17.0")
 
     // 第三方库
     implementation("com.squareup.okio:okio:3.6.0")
     implementation("com.squareup.wire:wire-runtime:4.9.2")
-
-    // 本地 libs 目录
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.aar", "*.jar"))))
 }
 
 kapt {

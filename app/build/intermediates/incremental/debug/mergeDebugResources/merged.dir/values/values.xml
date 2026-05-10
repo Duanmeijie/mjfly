@@ -2212,7 +2212,7 @@ These Terms provide that all disputes between you and DJI will be resolved by BI
     <string name="app_file_size_ratio_format">%1$dMB/%2$dMB</string>
     <string name="app_iknow">OK</string>
     <string name="app_isee">OK</string>
-    <string name="app_name" ns1:override="true">DJI Pilot 2</string>
+    <string name="app_name">MJFLY</string>
     <string name="app_network_error">Network unavailable. Please check your connection.</string>
     <string name="app_no_app_for_intent">No App to open</string>
     <string name="app_not_login">Not Logged in</string>

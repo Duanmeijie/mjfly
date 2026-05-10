@@ -1,7 +1,10 @@
 package com.dmj.fly.sdk;
 
+import android.util.Log;
 import dji.v5.common.error.IDJIError;
+import dji.v5.common.register.DJISDKInitEvent;
 import dji.v5.manager.SDKManager;
+import dji.v5.manager.interfaces.SDKManagerCallback;
 import kotlinx.coroutines.flow.StateFlow;
 
 @kotlin.Metadata(mv = {1, 9, 0}, k = 1, xi = 48, d1 = {"\u0000\u0016\n\u0002\u0018\u0002\n\u0002\u0010\u0000\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0000\b6\u0018\u00002\u00020\u0001:\u0002\u0003\u0004B\u0007\b\u0004\u00a2\u0006\u0002\u0010\u0002\u0082\u0001\u0002\u0005\u0006\u00a8\u0006\u0007"}, d2 = {"Lcom/dmj/fly/sdk/ConnectionState;", "", "()V", "Connected", "Disconnected", "Lcom/dmj/fly/sdk/ConnectionState$Connected;", "Lcom/dmj/fly/sdk/ConnectionState$Disconnected;", "app_debug"})

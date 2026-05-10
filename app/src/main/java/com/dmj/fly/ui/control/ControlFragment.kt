@@ -39,7 +39,7 @@ class ControlFragment : Fragment() {
 
     private fun setupVirtualSticks() {
         binding.virtualStickLeft.onStickChanged = { x, y ->
-            viewModel.updateVirtualStickData(viewModel.uiState.value.let { 0f }, x, y, x)
+            viewModel.updateVirtualStickData(0f, 0f, x, y)
         }
 
         binding.virtualStickRight.onStickChanged = { x, y ->

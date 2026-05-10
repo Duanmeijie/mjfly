@@ -8,7 +8,6 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.dmj.fly.R
 import com.dmj.fly.databinding.ActivityMainBinding
-import com.dmj.fly.sdk.DjiSdkManager
 import com.dmj.fly.util.PermissionHelper
 import dagger.hilt.android.AndroidEntryPoint
 
