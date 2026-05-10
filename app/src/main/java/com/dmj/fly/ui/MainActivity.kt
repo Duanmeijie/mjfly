@@ -47,8 +47,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initializeSdk() {
-        // SDK 已在 FlyApplication 中初始化，这里只需确保 DjiSdkManager 启动连接
-        DjiSdkManager.startConnectionToProduct()
+        // SDK 初始化由 FlyApplication 自动处理
     }
 
     private fun requestPermissions() {

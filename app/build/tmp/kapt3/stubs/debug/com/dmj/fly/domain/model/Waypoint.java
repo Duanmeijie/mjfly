@@ -13,52 +13,6 @@ public final class Waypoint {
     private final float speed = 0.0F;
     private final float gimbalPitch = 0.0F;
     
-    public Waypoint(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.WaypointAction action, long actionTime, int turnMode, float speed, float gimbalPitch) {
-        super();
-    }
-    
-    public final double getLatitude() {
-        return 0.0;
-    }
-    
-    public final double getLongitude() {
-        return 0.0;
-    }
-    
-    public final float getAltitude() {
-        return 0.0F;
-    }
-    
-    public final float getHeading() {
-        return 0.0F;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.WaypointAction getAction() {
-        return null;
-    }
-    
-    public final long getActionTime() {
-        return 0L;
-    }
-    
-    public final int getTurnMode() {
-        return 0;
-    }
-    
-    public final float getSpeed() {
-        return 0.0F;
-    }
-    
-    public final float getGimbalPitch() {
-        return 0.0F;
-    }
-    
-    public Waypoint() {
-        super();
-    }
-    
     public final double component1() {
         return 0.0;
     }
@@ -117,5 +71,51 @@ public final class Waypoint {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public Waypoint(double latitude, double longitude, float altitude, float heading, @org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.WaypointAction action, long actionTime, int turnMode, float speed, float gimbalPitch) {
+        super();
+    }
+    
+    public final double getLatitude() {
+        return 0.0;
+    }
+    
+    public final double getLongitude() {
+        return 0.0;
+    }
+    
+    public final float getAltitude() {
+        return 0.0F;
+    }
+    
+    public final float getHeading() {
+        return 0.0F;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.WaypointAction getAction() {
+        return null;
+    }
+    
+    public final long getActionTime() {
+        return 0L;
+    }
+    
+    public final int getTurnMode() {
+        return 0;
+    }
+    
+    public final float getSpeed() {
+        return 0.0F;
+    }
+    
+    public final float getGimbalPitch() {
+        return 0.0F;
+    }
+    
+    public Waypoint() {
+        super();
     }
 }

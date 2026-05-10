@@ -19,36 +19,6 @@ public final class CameraUiState {
     private final float zoomMax = 0.0F;
     private final float currentZoom = 0.0F;
     
-    public CameraUiState(@org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.CameraState cameraState, boolean isRecording, float zoomMin, float zoomMax, float currentZoom) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.CameraState getCameraState() {
-        return null;
-    }
-    
-    public final boolean isRecording() {
-        return false;
-    }
-    
-    public final float getZoomMin() {
-        return 0.0F;
-    }
-    
-    public final float getZoomMax() {
-        return 0.0F;
-    }
-    
-    public final float getCurrentZoom() {
-        return 0.0F;
-    }
-    
-    public CameraUiState() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.CameraState component1() {
         return null;
@@ -91,5 +61,35 @@ public final class CameraUiState {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public CameraUiState(@org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.CameraState cameraState, boolean isRecording, float zoomMin, float zoomMax, float currentZoom) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.CameraState getCameraState() {
+        return null;
+    }
+    
+    public final boolean isRecording() {
+        return false;
+    }
+    
+    public final float getZoomMin() {
+        return 0.0F;
+    }
+    
+    public final float getZoomMax() {
+        return 0.0F;
+    }
+    
+    public final float getCurrentZoom() {
+        return 0.0F;
+    }
+    
+    public CameraUiState() {
+        super();
     }
 }

@@ -12,46 +12,6 @@ public final class LiveStreamConfig {
     private final int bitrate = 0;
     private final int frameRate = 0;
     
-    public LiveStreamConfig(@org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.StreamType type, @org.jetbrains.annotations.NotNull()
-    java.lang.String url, boolean enabled, int width, int height, int bitrate, int frameRate) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.StreamType getType() {
-        return null;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.lang.String getUrl() {
-        return null;
-    }
-    
-    public final boolean getEnabled() {
-        return false;
-    }
-    
-    public final int getWidth() {
-        return 0;
-    }
-    
-    public final int getHeight() {
-        return 0;
-    }
-    
-    public final int getBitrate() {
-        return 0;
-    }
-    
-    public final int getFrameRate() {
-        return 0;
-    }
-    
-    public LiveStreamConfig() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.StreamType component1() {
         return null;
@@ -104,5 +64,45 @@ public final class LiveStreamConfig {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public LiveStreamConfig(@org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.StreamType type, @org.jetbrains.annotations.NotNull()
+    java.lang.String url, boolean enabled, int width, int height, int bitrate, int frameRate) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.StreamType getType() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.lang.String getUrl() {
+        return null;
+    }
+    
+    public final boolean getEnabled() {
+        return false;
+    }
+    
+    public final int getWidth() {
+        return 0;
+    }
+    
+    public final int getHeight() {
+        return 0;
+    }
+    
+    public final int getBitrate() {
+        return 0;
+    }
+    
+    public final int getFrameRate() {
+        return 0;
+    }
+    
+    public LiveStreamConfig() {
+        super();
     }
 }

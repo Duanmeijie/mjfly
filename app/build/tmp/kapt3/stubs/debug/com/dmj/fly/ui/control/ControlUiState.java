@@ -19,36 +19,6 @@ public final class ControlUiState {
     private final boolean isVirtualStickEnabled = false;
     private final boolean needLandingConfirmation = false;
     
-    public ControlUiState(@org.jetbrains.annotations.NotNull()
-    java.lang.String connectionStatus, int battery, boolean isFlying, boolean isVirtualStickEnabled, boolean needLandingConfirmation) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.lang.String getConnectionStatus() {
-        return null;
-    }
-    
-    public final int getBattery() {
-        return 0;
-    }
-    
-    public final boolean isFlying() {
-        return false;
-    }
-    
-    public final boolean isVirtualStickEnabled() {
-        return false;
-    }
-    
-    public final boolean getNeedLandingConfirmation() {
-        return false;
-    }
-    
-    public ControlUiState() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final java.lang.String component1() {
         return null;
@@ -91,5 +61,35 @@ public final class ControlUiState {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public ControlUiState(@org.jetbrains.annotations.NotNull()
+    java.lang.String connectionStatus, int battery, boolean isFlying, boolean isVirtualStickEnabled, boolean needLandingConfirmation) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.lang.String getConnectionStatus() {
+        return null;
+    }
+    
+    public final int getBattery() {
+        return 0;
+    }
+    
+    public final boolean isFlying() {
+        return false;
+    }
+    
+    public final boolean isVirtualStickEnabled() {
+        return false;
+    }
+    
+    public final boolean getNeedLandingConfirmation() {
+        return false;
+    }
+    
+    public ControlUiState() {
+        super();
     }
 }

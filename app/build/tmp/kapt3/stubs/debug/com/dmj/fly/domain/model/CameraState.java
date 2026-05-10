@@ -13,52 +13,6 @@ public final class CameraState {
     private final float zoomMax = 0.0F;
     private final float currentZoom = 0.0F;
     
-    public CameraState(@org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.CameraMode mode, boolean isRecording, boolean isShootingPhoto, int storageLocation, int availablePhotoCount, int availableVideoDuration, float zoomMin, float zoomMax, float currentZoom) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.CameraMode getMode() {
-        return null;
-    }
-    
-    public final boolean isRecording() {
-        return false;
-    }
-    
-    public final boolean isShootingPhoto() {
-        return false;
-    }
-    
-    public final int getStorageLocation() {
-        return 0;
-    }
-    
-    public final int getAvailablePhotoCount() {
-        return 0;
-    }
-    
-    public final int getAvailableVideoDuration() {
-        return 0;
-    }
-    
-    public final float getZoomMin() {
-        return 0.0F;
-    }
-    
-    public final float getZoomMax() {
-        return 0.0F;
-    }
-    
-    public final float getCurrentZoom() {
-        return 0.0F;
-    }
-    
-    public CameraState() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.CameraMode component1() {
         return null;
@@ -117,5 +71,51 @@ public final class CameraState {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public CameraState(@org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.CameraMode mode, boolean isRecording, boolean isShootingPhoto, int storageLocation, int availablePhotoCount, int availableVideoDuration, float zoomMin, float zoomMax, float currentZoom) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.CameraMode getMode() {
+        return null;
+    }
+    
+    public final boolean isRecording() {
+        return false;
+    }
+    
+    public final boolean isShootingPhoto() {
+        return false;
+    }
+    
+    public final int getStorageLocation() {
+        return 0;
+    }
+    
+    public final int getAvailablePhotoCount() {
+        return 0;
+    }
+    
+    public final int getAvailableVideoDuration() {
+        return 0;
+    }
+    
+    public final float getZoomMin() {
+        return 0.0F;
+    }
+    
+    public final float getZoomMax() {
+        return 0.0F;
+    }
+    
+    public final float getCurrentZoom() {
+        return 0.0F;
+    }
+    
+    public CameraState() {
+        super();
     }
 }

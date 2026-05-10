@@ -18,6 +18,10 @@
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
+    <!-- 存储 (Android 12 及以下) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <!-- 硬件 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -29,21 +33,36 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.usb.accessory" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-feature android:name="android.hardware.location.gps" />
 
     <application
         android:name=".FlyApplication"
         android:largeHeap="true"
-        android:allowBackup="true">
+        android:allowBackup="true"
+        android:networkSecurityConfig="@xml/network_security_config">
 
         <!-- DJI App Key 配置 -->
         <meta-data
             android:name="com.dji.sdk.API_KEY"
             android:value="EE45A36E38A16E49C8CF38A8" />
 
+        <!-- DJI SDK V5 服务 -->
+        <service
+            android:name="com.dji.sdk.api.service.DJIUserService"
+            android:exported="false" />
+
+        <!-- USB 设备连接服务 -->
+        <service
+            android:name="android.hardware.usb.UsbDeviceService"
+            android:exported="false" />
+
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            android:configChanges="orientation|screenSize|keyboardHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -25,6 +25,19 @@ public final class VirtualStickView extends android.view.View {
     
     @kotlin.jvm.JvmOverloads()
     public VirtualStickView(@org.jetbrains.annotations.NotNull()
+    android.content.Context context) {
+        super(null);
+    }
+    
+    @kotlin.jvm.JvmOverloads()
+    public VirtualStickView(@org.jetbrains.annotations.NotNull()
+    android.content.Context context, @org.jetbrains.annotations.Nullable()
+    android.util.AttributeSet attrs) {
+        super(null);
+    }
+    
+    @kotlin.jvm.JvmOverloads()
+    public VirtualStickView(@org.jetbrains.annotations.NotNull()
     android.content.Context context, @org.jetbrains.annotations.Nullable()
     android.util.AttributeSet attrs, int defStyleAttr) {
         super(null);
@@ -61,18 +74,5 @@ public final class VirtualStickView extends android.view.View {
     }
     
     public final void setValues(float x, float y) {
-    }
-    
-    @kotlin.jvm.JvmOverloads()
-    public VirtualStickView(@org.jetbrains.annotations.NotNull()
-    android.content.Context context) {
-        super(null);
-    }
-    
-    @kotlin.jvm.JvmOverloads()
-    public VirtualStickView(@org.jetbrains.annotations.NotNull()
-    android.content.Context context, @org.jetbrains.annotations.Nullable()
-    android.util.AttributeSet attrs) {
-        super(null);
     }
 }

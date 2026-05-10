@@ -14,52 +14,6 @@ public final class MediaFile {
     @org.jetbrains.annotations.Nullable()
     private final java.lang.String filePath = null;
     
-    public MediaFile(long fileId, @org.jetbrains.annotations.NotNull()
-    java.lang.String fileName, long fileSize, long createTime, long duration, @org.jetbrains.annotations.Nullable()
-    java.lang.String thumbnailPath, boolean isVideo, @org.jetbrains.annotations.Nullable()
-    java.lang.String filePath) {
-        super();
-    }
-    
-    public final long getFileId() {
-        return 0L;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.lang.String getFileName() {
-        return null;
-    }
-    
-    public final long getFileSize() {
-        return 0L;
-    }
-    
-    public final long getCreateTime() {
-        return 0L;
-    }
-    
-    public final long getDuration() {
-        return 0L;
-    }
-    
-    @org.jetbrains.annotations.Nullable()
-    public final java.lang.String getThumbnailPath() {
-        return null;
-    }
-    
-    public final boolean isVideo() {
-        return false;
-    }
-    
-    @org.jetbrains.annotations.Nullable()
-    public final java.lang.String getFilePath() {
-        return null;
-    }
-    
-    public MediaFile() {
-        super();
-    }
-    
     public final long component1() {
         return 0L;
     }
@@ -118,5 +72,51 @@ public final class MediaFile {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public MediaFile(long fileId, @org.jetbrains.annotations.NotNull()
+    java.lang.String fileName, long fileSize, long createTime, long duration, @org.jetbrains.annotations.Nullable()
+    java.lang.String thumbnailPath, boolean isVideo, @org.jetbrains.annotations.Nullable()
+    java.lang.String filePath) {
+        super();
+    }
+    
+    public final long getFileId() {
+        return 0L;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.lang.String getFileName() {
+        return null;
+    }
+    
+    public final long getFileSize() {
+        return 0L;
+    }
+    
+    public final long getCreateTime() {
+        return 0L;
+    }
+    
+    public final long getDuration() {
+        return 0L;
+    }
+    
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.String getThumbnailPath() {
+        return null;
+    }
+    
+    public final boolean isVideo() {
+        return false;
+    }
+    
+    @org.jetbrains.annotations.Nullable()
+    public final java.lang.String getFilePath() {
+        return null;
+    }
+    
+    public MediaFile() {
+        super();
     }
 }

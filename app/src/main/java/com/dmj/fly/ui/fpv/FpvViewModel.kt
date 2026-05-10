@@ -30,7 +30,7 @@ class FpvViewModel @Inject constructor(
         viewModelScope.launch {
             DjiSdkManager.connectionState.collect { state ->
                 _connectionStatus.value = when (state) {
-                    is ConnectionState.Connected -> "已连接: ${state.modelName}"
+                    is ConnectionState.Connected -> "已连接 (ID: ${state.productId})"
                     is ConnectionState.Disconnected -> "未连接"
                 }
             }

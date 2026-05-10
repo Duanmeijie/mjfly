@@ -56,7 +56,7 @@ class ControlViewModel @Inject constructor(
                 Pair(connectionState, status)
             }.collect { (connectionState, status) ->
                 val statusText = when (connectionState) {
-                    is ConnectionState.Connected -> "已连接: ${connectionState.modelName}"
+                    is ConnectionState.Connected -> "已连接 (ID: ${connectionState.productId})"
                     is ConnectionState.Disconnected -> "未连接"
                 }
                 _uiState.value = _uiState.value.copy(

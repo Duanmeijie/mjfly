@@ -17,30 +17,6 @@ public final class MediaUiState {
     @org.jetbrains.annotations.NotNull()
     private final java.util.Map<java.lang.String, java.lang.Integer> downloadProgress = null;
     
-    public MediaUiState(@org.jetbrains.annotations.NotNull()
-    java.util.List<com.dmj.fly.domain.model.MediaFile> files, boolean isLoading, @org.jetbrains.annotations.NotNull()
-    java.util.Map<java.lang.String, java.lang.Integer> downloadProgress) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.util.List<com.dmj.fly.domain.model.MediaFile> getFiles() {
-        return null;
-    }
-    
-    public final boolean isLoading() {
-        return false;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.util.Map<java.lang.String, java.lang.Integer> getDownloadProgress() {
-        return null;
-    }
-    
-    public MediaUiState() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final java.util.List<com.dmj.fly.domain.model.MediaFile> component1() {
         return null;
@@ -77,5 +53,29 @@ public final class MediaUiState {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public MediaUiState(@org.jetbrains.annotations.NotNull()
+    java.util.List<com.dmj.fly.domain.model.MediaFile> files, boolean isLoading, @org.jetbrains.annotations.NotNull()
+    java.util.Map<java.lang.String, java.lang.Integer> downloadProgress) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.util.List<com.dmj.fly.domain.model.MediaFile> getFiles() {
+        return null;
+    }
+    
+    public final boolean isLoading() {
+        return false;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.util.Map<java.lang.String, java.lang.Integer> getDownloadProgress() {
+        return null;
+    }
+    
+    public MediaUiState() {
+        super();
     }
 }

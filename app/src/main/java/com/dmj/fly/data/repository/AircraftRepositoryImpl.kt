@@ -19,7 +19,6 @@ class AircraftRepositoryImpl @Inject constructor(
     private val keyManagerHelper: KeyManagerHelper
 ) : AircraftRepository {
 
-    // 使用 MutableStateFlow 作为数据源，稍后可以替换为真实的 Key 监听
     private val _mockConnectionState = MutableStateFlow(false)
     private val _mockFlightMode = MutableStateFlow("P-GPS")
     private val _mockGpsSignal = MutableStateFlow(5)
@@ -80,7 +79,6 @@ class AircraftRepositoryImpl @Inject constructor(
 
     override fun getConnectionState(): Flow<Boolean> = _mockConnectionState
 
-    // 以下方法用于更新数据，可以在实际 SDK 集成时调用
     fun updateConnectionState(connected: Boolean) {
         _mockConnectionState.value = connected
     }

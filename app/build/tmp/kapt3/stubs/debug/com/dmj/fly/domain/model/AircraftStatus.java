@@ -14,56 +14,6 @@ public final class AircraftStatus {
     private final double latitude = 0.0;
     private final double longitude = 0.0;
     
-    public AircraftStatus(boolean isConnected, @org.jetbrains.annotations.NotNull()
-    java.lang.String flightMode, int gpsSignalLevel, int batteryPercentage, boolean isFlying, boolean isMotorsOn, long flightTime, double altitude, double latitude, double longitude) {
-        super();
-    }
-    
-    public final boolean isConnected() {
-        return false;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final java.lang.String getFlightMode() {
-        return null;
-    }
-    
-    public final int getGpsSignalLevel() {
-        return 0;
-    }
-    
-    public final int getBatteryPercentage() {
-        return 0;
-    }
-    
-    public final boolean isFlying() {
-        return false;
-    }
-    
-    public final boolean isMotorsOn() {
-        return false;
-    }
-    
-    public final long getFlightTime() {
-        return 0L;
-    }
-    
-    public final double getAltitude() {
-        return 0.0;
-    }
-    
-    public final double getLatitude() {
-        return 0.0;
-    }
-    
-    public final double getLongitude() {
-        return 0.0;
-    }
-    
-    public AircraftStatus() {
-        super();
-    }
-    
     public final boolean component1() {
         return false;
     }
@@ -126,5 +76,55 @@ public final class AircraftStatus {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public AircraftStatus(boolean isConnected, @org.jetbrains.annotations.NotNull()
+    java.lang.String flightMode, int gpsSignalLevel, int batteryPercentage, boolean isFlying, boolean isMotorsOn, long flightTime, double altitude, double latitude, double longitude) {
+        super();
+    }
+    
+    public final boolean isConnected() {
+        return false;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final java.lang.String getFlightMode() {
+        return null;
+    }
+    
+    public final int getGpsSignalLevel() {
+        return 0;
+    }
+    
+    public final int getBatteryPercentage() {
+        return 0;
+    }
+    
+    public final boolean isFlying() {
+        return false;
+    }
+    
+    public final boolean isMotorsOn() {
+        return false;
+    }
+    
+    public final long getFlightTime() {
+        return 0L;
+    }
+    
+    public final double getAltitude() {
+        return 0.0;
+    }
+    
+    public final double getLatitude() {
+        return 0.0;
+    }
+    
+    public final double getLongitude() {
+        return 0.0;
+    }
+    
+    public AircraftStatus() {
+        super();
     }
 }

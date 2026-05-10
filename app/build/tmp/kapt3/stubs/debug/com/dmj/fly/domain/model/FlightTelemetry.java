@@ -14,58 +14,6 @@ public final class FlightTelemetry {
     private final float velocityY = 0.0F;
     private final float velocityZ = 0.0F;
     
-    public FlightTelemetry(double latitude, double longitude, float relativeAltitude, float ultrasonicHeight, float takeoffAltitude, float pitch, float roll, float yaw, float velocityX, float velocityY, float velocityZ) {
-        super();
-    }
-    
-    public final double getLatitude() {
-        return 0.0;
-    }
-    
-    public final double getLongitude() {
-        return 0.0;
-    }
-    
-    public final float getRelativeAltitude() {
-        return 0.0F;
-    }
-    
-    public final float getUltrasonicHeight() {
-        return 0.0F;
-    }
-    
-    public final float getTakeoffAltitude() {
-        return 0.0F;
-    }
-    
-    public final float getPitch() {
-        return 0.0F;
-    }
-    
-    public final float getRoll() {
-        return 0.0F;
-    }
-    
-    public final float getYaw() {
-        return 0.0F;
-    }
-    
-    public final float getVelocityX() {
-        return 0.0F;
-    }
-    
-    public final float getVelocityY() {
-        return 0.0F;
-    }
-    
-    public final float getVelocityZ() {
-        return 0.0F;
-    }
-    
-    public FlightTelemetry() {
-        super();
-    }
-    
     public final double component1() {
         return 0.0;
     }
@@ -130,5 +78,57 @@ public final class FlightTelemetry {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public FlightTelemetry(double latitude, double longitude, float relativeAltitude, float ultrasonicHeight, float takeoffAltitude, float pitch, float roll, float yaw, float velocityX, float velocityY, float velocityZ) {
+        super();
+    }
+    
+    public final double getLatitude() {
+        return 0.0;
+    }
+    
+    public final double getLongitude() {
+        return 0.0;
+    }
+    
+    public final float getRelativeAltitude() {
+        return 0.0F;
+    }
+    
+    public final float getUltrasonicHeight() {
+        return 0.0F;
+    }
+    
+    public final float getTakeoffAltitude() {
+        return 0.0F;
+    }
+    
+    public final float getPitch() {
+        return 0.0F;
+    }
+    
+    public final float getRoll() {
+        return 0.0F;
+    }
+    
+    public final float getYaw() {
+        return 0.0F;
+    }
+    
+    public final float getVelocityX() {
+        return 0.0F;
+    }
+    
+    public final float getVelocityY() {
+        return 0.0F;
+    }
+    
+    public final float getVelocityZ() {
+        return 0.0F;
+    }
+    
+    public FlightTelemetry() {
+        super();
     }
 }

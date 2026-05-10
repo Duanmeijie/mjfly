@@ -15,26 +15,6 @@ public final class TelemetryUiState {
     @org.jetbrains.annotations.NotNull()
     private final com.dmj.fly.domain.model.FlightTelemetry flightTelemetry = null;
     
-    public TelemetryUiState(@org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.AircraftStatus aircraftStatus, @org.jetbrains.annotations.NotNull()
-    com.dmj.fly.domain.model.FlightTelemetry flightTelemetry) {
-        super();
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.AircraftStatus getAircraftStatus() {
-        return null;
-    }
-    
-    @org.jetbrains.annotations.NotNull()
-    public final com.dmj.fly.domain.model.FlightTelemetry getFlightTelemetry() {
-        return null;
-    }
-    
-    public TelemetryUiState() {
-        super();
-    }
-    
     @org.jetbrains.annotations.NotNull()
     public final com.dmj.fly.domain.model.AircraftStatus component1() {
         return null;
@@ -67,5 +47,25 @@ public final class TelemetryUiState {
     @org.jetbrains.annotations.NotNull()
     public java.lang.String toString() {
         return null;
+    }
+    
+    public TelemetryUiState(@org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.AircraftStatus aircraftStatus, @org.jetbrains.annotations.NotNull()
+    com.dmj.fly.domain.model.FlightTelemetry flightTelemetry) {
+        super();
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.AircraftStatus getAircraftStatus() {
+        return null;
+    }
+    
+    @org.jetbrains.annotations.NotNull()
+    public final com.dmj.fly.domain.model.FlightTelemetry getFlightTelemetry() {
+        return null;
+    }
+    
+    public TelemetryUiState() {
+        super();
     }
 }
