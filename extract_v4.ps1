@@ -1,7 +1,7 @@
 $ErrorActionPreference = "Stop"
 
 $aar = "C:\Users\14472\.gradle\caches\modules-2\files-2.1\com.dji\dji-sdk-v5-aircraft\5.17.0\dbdb979eda74de02d08ad17d91e5c256511f4ae0\dji-sdk-v5-aircraft-5.17.0.aar"
-$tmp  = "C:\Users\14472\.gradle\caches\modules-2\files-2.1\com.dji\dji-sdk-v5-aircraft\5.17.0\dbdb979eda74de02d08ad17d91e5c256511f4ae0\_tmp3"
+$tmp  = "C:\Users\14472\.gradle\caches\modules-2\files-2.1\com.dji\dji-sdk-v5-aircraft\5.17.0\dbdb979eda74de02d08ad17d91e5c256511f4ae0\_tmp4"
 $projectDir = "D:\Projects\mjfly\app"
 
 # Cleanup
@@ -9,31 +9,37 @@ if (Test-Path $tmp) { Remove-Item $tmp -Recurse -Force }
 New-Item -ItemType Directory -Path $tmp -Force | Out-Null
 
 # Step 1: Extract AAR (rename to .zip first)
-$zipFile = Join-Path $tmp "aircraft.zip"
+$zipFile = Join-Path $tmp "outer_aircraft.zip"
 Copy-Item $aar $zipFile -Force
 Expand-Archive -Path $zipFile -DestinationPath $tmp -Force
-Write-Host "=== AAR Contents ==="
+Write-Host "=== Outer AAR Contents ==="
 Get-ChildItem $tmp -File | ForEach-Object { Write-Host "  $($_.Name) $([math]::Round($_.Length/1KB,1))KB" }
 
-# Step 2: Extract nested aircraft.zip (关键修复！文件名是 aircraft.zip 不是 dji.zip！)
-$nestedZip = Join-Path $tmp "aircraft.zip"
-$nestedDir = Join-Path $tmp "nested_dji"
-if (Test-Path $nestedZip) {
-    Write-Host "`n=== Found aircraft.zip ($([math]::Round((Get-Item $nestedZip).Length/1MB,2))MB), extracting ==="
+# Step 2: Find and extract nested zip (可能叫 aircraft.zip 或 dji.zip)
+$possibleNestedNames = @("aircraft.zip", "dji.zip")
+$nestedZip = $null
+foreach ($name in $possibleNestedNames) {
+    $testPath = Join-Path $tmp $name
+    if (Test-Path $testPath) {
+        $nestedZip = $testPath
+        break
+    }
+}
+
+if ($null -ne $nestedZip) {
+    $nestedDir = Join-Path $tmp "nested_dji"
+    Write-Host "`n=== Found nested zip: $([System.IO.Path]::GetFileName($nestedZip)) ($([math]::Round((Get-Item $nestedZip).Length/1MB,2))MB), extracting ==="
     New-Item -ItemType Directory -Path $nestedDir -Force | Out-Null
-    $nzip = Join-Path $tmp "aircraft_as_zip.zip"
-    Copy-Item $nestedZip $nzip -Force
-    Expand-Archive -Path $nzip -DestinationPath $nestedDir -Force
+    Expand-Archive -Path $nestedZip -DestinationPath $nestedDir -Force
     $entries = @(Get-ChildItem $nestedDir)
-    Write-Host "aircraft.zip root contents: $($entries.Count) items"
+    Write-Host "Nested zip root contents: $($entries.Count) items"
     $entries | ForEach-Object { Write-Host "  $($_.Name)" }
 
-    # Copy nested classes.jar to overwrite root
+    # Copy nested classes.jar
     $nestedClasses = Join-Path $nestedDir "classes.jar"
     $rootClasses = Join-Path $tmp "classes.jar"
     if (Test-Path $nestedClasses) {
         Write-Host "`nnested classes.jar size: $([math]::Round((Get-Item $nestedClasses).Length/1MB,2))MB"
-        # Verify SDKManager exists
         & jar tf $nestedClasses | Where-Object { $_ -match "SDKManager" } | ForEach-Object { Write-Host "  FOUND: $_" }
         Copy-Item $nestedClasses $rootClasses -Force
         Write-Host "Overwrote classes.jar"
@@ -52,8 +58,8 @@ if (Test-Path $nestedZip) {
 $finalJar = Join-Path $tmp "classes.jar"
 Write-Host "`n=== Final classes.jar Verification ==="
 Write-Host "Size: $([math]::Round((Get-Item $finalJar).Length/1MB,2))MB"
-Write-Host "SDKManager related classes:"
-& jar tf $finalJar | Where-Object { $_ -match "dji/v5/manager/SDKManager" } | ForEach-Object { Write-Host "  $_" }
+Write-Host "SDKManager class check:"
+& jar tf $finalJar | Where-Object { $_ -match "SDKManager" } | ForEach-Object { Write-Host "  $_" }
 
 # Step 4: Copy to project
 $libsDir = Join-Path $projectDir "libs"

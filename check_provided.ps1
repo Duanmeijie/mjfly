@@ -1,22 +1,13 @@
-$provided = "C:\Users\14472\.gradle\caches\modules-2\files-2.1\com.dji\dji-sdk-v5-aircraft-provided\5.17.0\88ad88cc0fd52f3dbdf69855f562a161d052420f\dji-sdk-v5-aircraft-provided-5.17.0.jar"
+$providedJar = "C:\Users\14472\.gradle\caches\modules-2\files-2.1\com.dji\dji-sdk-v5-aircraft-provided\5.17.0\88ad88cc0fd52f3dbdf69855f562a161d052420f\dji-sdk-v5-aircraft-provided-5.17.0.jar"
+Write-Host "Checking provided JAR..."
+Write-Host "Size: $([math]::Round((Get-Item $providedJar).Length/1MB, 2)) MB"
 
-Write-Host "=== provided jar 中 dji/v5/ 的所有内容 ==="
-& jar tf $provided | Where-Object { $_ -match "^dji/v5/" } | ForEach-Object { Write-Host $_ }
+$tmpDir = "C:\Users\14472\AppData\Local\Temp\dji_provided_check"
+if (Test-Path $tmpDir) { Remove-Item $tmpDir -Recurse -Force }
+New-Item -ItemType Directory -Path $tmpDir -Force | Out-Null
 
-Write-Host ""
-Write-Host "=== provided jar 中所有顶层包 ==="
-& jar tf $provided | Where-Object { $_ -match "^dji/[^/]+/" } | Select-Object -Unique | ForEach-Object { Write-Host $_ }
+Copy-Item $providedJar (Join-Path $tmpDir "provided.zip")
+Expand-Archive -Path (Join-Path $tmpDir "provided.zip") -DestinationPath $tmpDir -Force
 
-Write-Host ""
-Write-Host "=== SDKManager 类 ==="
-& jar tf $provided | Where-Object { $_ -match "SDKManager" } | ForEach-Object { Write-Host $_ }
-
-Write-Host ""
-Write-Host "=== 是否存在 dji/v5/ 开头的类 ==="
-$djiV5Count = (& jar tf $provided | Where-Object { $_ -match "^dji/v5/" }).Count
-Write-Host "dji/v5/ 类数量: $djiV5Count"
-
-Write-Host ""
-Write-Host "=== provided jar 文件大小 ==="
-$file = Get-Item $provided
-Write-Host "$($file.Name): $([math]::Round($file.Length / 1MB, 2)) MB"
+Write-Host "`n=== Classes in JAR ==="
+& jar tf $providedJar | Where-Object { $_ -match "\.class$" } | ForEach-Object { Write-Host "  $_" }

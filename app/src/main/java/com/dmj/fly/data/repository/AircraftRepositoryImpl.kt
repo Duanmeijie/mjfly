@@ -4,9 +4,6 @@ import com.dmj.fly.data.datasource.msdk.KeyManagerHelper
 import com.dmj.fly.domain.model.AircraftStatus
 import com.dmj.fly.domain.model.FlightTelemetry
 import com.dmj.fly.domain.repository.AircraftRepository
-import dji.sdk.keyvalue.value.common.Attitude
-import dji.sdk.keyvalue.value.common.LocationCoordinate3D
-import dji.sdk.keyvalue.value.common.Velocity3D
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
@@ -26,7 +23,8 @@ class AircraftRepositoryImpl @Inject constructor(
     private val _mockIsFlying = MutableStateFlow(false)
     private val _mockMotorsOn = MutableStateFlow(false)
     private val _mockFlightTime = MutableStateFlow(0L)
-    private val _mockLocation = MutableStateFlow(LocationCoordinate3D(0.0, 0.0, 0.0))
+    private val _mockLatitude = MutableStateFlow(0.0)
+    private val _mockLongitude = MutableStateFlow(0.0)
     private val _mockAltitude = MutableStateFlow(0.0)
 
     override fun getAircraftStatus(): Flow<AircraftStatus> {
@@ -38,7 +36,8 @@ class AircraftRepositoryImpl @Inject constructor(
             _mockIsFlying,
             _mockMotorsOn,
             _mockFlightTime,
-            _mockLocation,
+            _mockLatitude,
+            _mockLongitude,
             _mockAltitude
         ) { values ->
             AircraftStatus(
@@ -49,22 +48,23 @@ class AircraftRepositoryImpl @Inject constructor(
                 isFlying = values[4] as Boolean,
                 isMotorsOn = values[5] as Boolean,
                 flightTime = values[6] as Long,
-                latitude = (values[7] as LocationCoordinate3D).latitude,
-                longitude = (values[7] as LocationCoordinate3D).longitude,
-                altitude = values[8] as Double
+                latitude = values[7] as Double,
+                longitude = values[8] as Double,
+                altitude = values[9] as Double
             )
         }
     }
 
     override fun getTelemetry(): Flow<FlightTelemetry> {
         return combine(
-            _mockLocation,
+            _mockLatitude,
+            _mockLongitude,
             _mockAltitude
-        ) { location, altitude ->
+        ) { lat, lon, alt ->
             FlightTelemetry(
-                latitude = location.latitude,
-                longitude = location.longitude,
-                relativeAltitude = altitude.toFloat(),
+                latitude = lat,
+                longitude = lon,
+                relativeAltitude = alt.toFloat(),
                 ultrasonicHeight = 0f,
                 takeoffAltitude = 0f,
                 pitch = 0f,
@@ -92,7 +92,8 @@ class AircraftRepositoryImpl @Inject constructor(
     }
 
     fun updateLocation(lat: Double, lon: Double, alt: Double) {
-        _mockLocation.value = LocationCoordinate3D(lat, lon, alt)
+        _mockLatitude.value = lat
+        _mockLongitude.value = lon
         _mockAltitude.value = alt
     }
 }

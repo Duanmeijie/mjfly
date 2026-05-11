@@ -12,12 +12,31 @@ android {
     defaultConfig {
         applicationId = "com.dmj.fly"
         minSdk = 24
-        targetSdk = 35
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
         ndk {
             abiFilters += listOf("arm64-v8a")
+        }
+    }
+
+    buildTypes {
+        debug {
+            isMinifyEnabled = false
+            isShrinkResources = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        release {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
 
@@ -78,13 +97,16 @@ dependencies {
     implementation("com.jakewharton.timber:timber:5.0.1")
 
     // DJI SDK V5
-    api("com.dji:dji-sdk-v5-aircraft:5.17.0")
-    implementation("com.dji:dji-sdk-v5-aircraft-provided:5.17.0")
+    implementation("com.dji:dji-sdk-v5-aircraft:5.17.0")
+    compileOnly("com.dji:dji-sdk-v5-aircraft-provided:5.17.0")
     runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.17.0")
 
-    // 第三方库
-    implementation("com.squareup.okio:okio:3.6.0")
-    implementation("com.squareup.wire:wire-runtime:4.9.2")
+    // Also include local jars if any (optional fallback)
+    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
+    // 第三方库 - 注意：不要显式声明 wire-runtime，DJI SDK 内部依赖 wire 2.2.0
+    // 显式声明高版本会覆盖导致 NoSuchMethodError
+    implementation("com.squareup.okio:okio:1.17.6")
 }
 
 kapt {
