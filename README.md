@@ -5,11 +5,12 @@
 ![平台](https://img.shields.io/badge/平台-Android%207.0+-green)
 ![语言](https://img.shields.io/badge/语言-Kotlin-orange)
 ![DJI SDK](https://img.shields.io/badge/DJI%20SDK-V5%205.17.0-blue)
+![Tello](https://img.shields.io/badge/Tello-UDP%20WiFi-cyan)
 ![AGP](https://img.shields.io/badge/AGP-8.8.0-purple)
 ![Gradle](https://img.shields.io/badge/Gradle-8.10.2-6B3FA0)
-![版本](https://img.shields.io/badge/版本-1.0.0-red)
+![版本](https://img.shields.io/badge/版本-1.1.0-red)
 
-**基于 DJI SDK V5 5.17.0 的真实大疆无人机移动端控制应用**
+**支持 DJI Tello WiFi 直连控制的移动端无人机应用**
 
 </div>
 
@@ -17,9 +18,9 @@
 
 ## 项目概述
 
-MJFLY 是一款基于 **DJI SDK V5** 开发的 Android 无人机控制应用，非模拟器。通过手机 USB OTG 连接遥控器，可直接控制真实的大疆无人机执行起飞、降落、返航、虚拟摇杆等操作。
+MJFLY 是一款基于 Android 平台的无人机控制应用，支持通过 **WiFi 直连** 控制 DJI Tello 无人机，同时保留 DJI SDK V5 框架支持。手机连接无人机 WiFi 热点后，即可直接控制起飞、降落、虚拟摇杆操控，并实时接收电池电量、温度、高度等状态数据。
 
-采用 **MVVM + Repository** 分层架构，使用 Kotlin 协程 + Flow 进行异步数据处理，Hilt 进行依赖注入。
+采用 **MVVM + Repository** 分层架构，使用 Kotlin 协程 + Flow 进行异步数据处理，Hilt 进行依赖注入。通过 UDP 协议与 Tello 通信，支持实时状态监测和双摇杆飞行控制。
 
 ### 技术栈总览
 
@@ -35,7 +36,9 @@ MJFLY 是一款基于 **DJI SDK V5** 开发的 Android 无人机控制应用，�
 | **JDK** | 17 |
 | **Kotlin** | 2.1.0 |
 | **DJI SDK V5** | 5.17.0 |
+| **Tello 协议** | UDP (8889 命令 / 8890 状态) |
 | **Hilt** | 2.52 |
+| **连接方式** | WiFi 直连 (无需遥控器) |
 | **构建方式** | 全命令行 (无需 Android Studio) |
 
 ---
@@ -44,22 +47,20 @@ MJFLY 是一款基于 **DJI SDK V5** 开发的 Android 无人机控制应用，�
 
 | 功能模块 | 功能 | 说明 |
 |---------|------|------|
-| **飞行控制** | 一键起飞 | 自动起飞至安全高度 |
-| | 一键降落 | 自动降落 |
-| | 返航 (RTH) | 返回起飞点 |
-| | 取消返航 | 中止正在执行的返航 |
-| | 虚拟摇杆 | 屏幕双摇杆控制飞行姿态 |
+| **飞行控制** | 一键起飞 | UDP 发送 `takeoff` 命令 |
+| | 一键降落 | UDP 发送 `land` 命令 |
+| | 返航 (RTH) | Tello 不支持，降落代替 |
+| | 虚拟摇杆 | 屏幕双摇杆，`rc` 命令 20Hz 发送 |
 | | 紧急停止 | 禁用摇杆并立即降落 |
-| **相机控制** | 拍照 | 拍摄照片 |
-| | 录像 | 开始/停止录像 |
-| | 变焦控制 | 1x~10x 数字变焦 |
-| | 模式切换 | 拍照/录像模式切换 |
-| **遥测监测** | 飞行器状态 | 连接状态、飞行模式、电池、GPS |
-| | 飞行数据 | 位置、高度、姿态、速度 |
-| **媒体管理** | 文件浏览 | 查看机载媒体文件列表 |
-| | 文件下载 | 下载媒体文件到手机 |
-| | 文件删除 | 删除机载媒体文件 |
-| **直播功能** | 多协议支持 | RTMP/RTSP/GB28181/Agora |
+| **实时状态** | 电池电量 | UDP 8890 端口实时接收 |
+| | 温度监测 | 芯片高低温实时显示 |
+| | 飞行高度 | ToF 传感器 + 气压计数据 |
+| | 飞行姿态 | 俯仰/横滚/偏航角度 |
+| | 速度信息 | XYZ 三轴速度 |
+| | 飞行时间 | 本次飞行累计时间 |
+| **连接管理** | WiFi 自动检测 | 每 2 秒检测 SSID 是否匹配 |
+| | 连接状态显示 | 实时显示连接的无人机名称 |
+| | 多机型 SSID 支持 | TELLO/Mini/Mavic/Air 等前缀识别 |
 
 ---
 
@@ -69,10 +70,8 @@ MJFLY 是一款基于 **DJI SDK V5** 开发的 Android 无人机控制应用，�
 
 - **JDK 17**
 - **Android SDK API 35**
-- **USB OTG 数据线**
-- **支持 USB Host 的 Android 手机**（Android 7.0+）
-- **DJI 无人机 + 遥控器**
-- **有效的 DJI App Key**
+- **DJI Tello 无人机**（或其他支持 WiFi 直连的 DJI 无人机）
+- **支持 WiFi 的 Android 手机**（Android 7.0+）
 
 ### 命令行构建与安装
 
@@ -97,41 +96,35 @@ adb shell am start -n com.dmj.fly/.ui.MainActivity
 ```
 ┌─────────────────────────────────────────────┐
 │              UI Layer                       │
-│  MainActivity + 5 Fragments + Custom Views  │
+│  MainActivity + Fragments + VirtualStickView│
 │  (ViewBinding, Navigation Component)        │
 └──────────────────────────┬──────────────────┘
                            │
 ┌──────────────────────────▼──────────────────┐
 │           ViewModel Layer                   │
-│  FpvViewModel, ControlViewModel,            │
-│  CameraViewModel, TelemetryViewModel,       │
-│  MediaViewModel                             │
+│  ControlViewModel, FpvViewModel             │
 │  (StateFlow, Coroutine, MVVM)               │
 └──────────────────────────┬──────────────────┘
                            │
 ┌──────────────────────────▼──────────────────┐
 │         Repository Layer                    │
-│  AircraftRepository  →  AircraftRepositoryImpl
-│  FlightControlRepository → FlightControlRepositoryImpl
-│  CameraRepository  →  CameraRepositoryImpl  │
-│  MediaRepository   →  MediaRepositoryImpl   │
-│  LiveStreamRepository → LiveStreamRepositoryImpl
-│  (接口 + 实现分离, 反射调用 DJI SDK)        │
+│  AircraftRepositoryImpl (Tello状态 → 统一模型)
+│  TelloFlightControlRepository (UDP命令发送)  │
+│  (接口 + 实现分离)                           │
 └──────────────────────────┬──────────────────┘
                            │
 ┌──────────────────────────▼──────────────────┐
-│          SDK Layer                          │
-│  DjiSdkManager (Object 单例)                │
-│  DjiSdkInitializer (初始化器)               │
-│  KeyManagerHelper (SDK Key 管理)            │
-│  (Flow 状态流, 事件回调)                    │
+│          数据源层                            │
+│  TelloStateReceiver (UDP 8890 状态监听解析)  │
+│  WifiConnectionDetector (SSID 检测)         │
+│  DjiSdkManager (SDK 注册 + WiFi 监控)       │
 └──────────────────────────┬──────────────────┘
                            │
 ┌──────────────────────────▼──────────────────┐
-│          DJI SDK V5 5.17.0                  │
-│  SDKManager, FlightController,              │
-│  VirtualStick, CameraController,            │
-│  MediaManager, FlySafe                      │
+│       通信协议层                             │
+│  Tello UDP 文本协议                          │
+│  命令端口：192.168.10.1:8889                 │
+│  状态端口：0.0.0.0:8890                      │
 └─────────────────────────────────────────────┘
 ```
 
@@ -146,68 +139,49 @@ mjfly/
 │   │   ├── java/com/dmj/fly/
 │   │   │   ├── FlyApplication.kt              # 应用入口，SDK 初始化
 │   │   │   ├── sdk/
-│   │   │   │   ├── DjiSdkManager.kt           # SDK 状态管理
-│   │   │   │   └── DjiSdkInitializer.kt       # SDK 初始化器
+│   │   │   │   └── DjiSdkManager.kt           # SDK 状态管理 + WiFi 监控
 │   │   │   ├── di/
 │   │   │   │   └── AppModule.kt               # Hilt 依赖注入
 │   │   │   ├── data/
-│   │   │   │   ├── datasource/msdk/
-│   │   │   │   │   └── KeyManagerHelper.kt    # SDK Key 管理
+│   │   │   │   ├── datasource/
+│   │   │   │   │   ├── tello/
+│   │   │   │   │   │   └── TelloStateReceiver.kt  # Tello UDP 状态接收
+│   │   │   │   │   └── msdk/
+│   │   │   │   │       └── KeyManagerHelper.kt    # SDK Key 管理
 │   │   │   │   └── repository/
-│   │   │   │       ├── AircraftRepositoryImpl.kt
-│   │   │   │       ├── FlightControlRepositoryImpl.kt
+│   │   │   │       ├── AircraftRepositoryImpl.kt      # 飞行器状态（Tello 数据）
+│   │   │   │       ├── TelloFlightControlRepository.kt # Tello UDP 飞行控制
+│   │   │   │       ├── FlightControlRepositoryImpl.kt  # DJI SDK 飞行控制
 │   │   │   │       ├── CameraRepositoryImpl.kt
 │   │   │   │       ├── MediaRepositoryImpl.kt
 │   │   │   │       └── LiveStreamRepositoryImpl.kt
 │   │   │   ├── domain/
 │   │   │   │   ├── model/                     # 数据模型
-│   │   │   │   │   ├── AircraftStatus.kt
-│   │   │   │   │   ├── FlightTelemetry.kt
-│   │   │   │   │   ├── CameraState.kt
-│   │   │   │   │   ├── MediaFile.kt
-│   │   │   │   │   ├── LiveStreamConfig.kt
-│   │   │   │   │   ├── Waypoint.kt
-│   │   │   │   │   └── Result.kt
+│   │   │   │   │   ├── AircraftStatus.kt      # 飞行器状态（电量/温度/高度）
+│   │   │   │   │   ├── FlightTelemetry.kt     # 飞行遥测
+│   │   │   │   │   └── Result.kt             # 结果包装
 │   │   │   │   └── repository/                # 领域接口
 │   │   │   │       ├── AircraftRepository.kt
-│   │   │   │       ├── FlightControlRepository.kt
-│   │   │   │       ├── CameraRepository.kt
-│   │   │   │       ├── MediaRepository.kt
-│   │   │   │       └── LiveStreamRepository.kt
+│   │   │   │       └── FlightControlRepository.kt
 │   │   │   ├── ui/
 │   │   │   │   ├── MainActivity.kt            # 主界面，权限管理
 │   │   │   │   ├── fpv/
-│   │   │   │   │   ├── FpvFragment.kt         # FPV 第一人称视角
+│   │   │   │   │   ├── FpvFragment.kt         # FPV 页面
 │   │   │   │   │   └── FpvViewModel.kt
 │   │   │   │   ├── control/
 │   │   │   │   │   ├── ControlFragment.kt     # 飞行控制面板
 │   │   │   │   │   └── ControlViewModel.kt
-│   │   │   │   ├── telemetry/
-│   │   │   │   │   ├── TelemetryFragment.kt   # 遥测数据
-│   │   │   │   │   └── TelemetryViewModel.kt
-│   │   │   │   ├── camera/
-│   │   │   │   │   ├── CameraFragment.kt      # 相机控制
-│   │   │   │   │   └── CameraViewModel.kt
-│   │   │   │   ├── media/
-│   │   │   │   │   ├── MediaFragment.kt       # 媒体管理
-│   │   │   │   │   ├── MediaViewModel.kt
-│   │   │   │   │   └── MediaAdapter.kt        # 列表适配器
 │   │   │   │   └── widget/
 │   │   │   │       └── VirtualStickView.kt    # 自定义虚拟摇杆
 │   │   │   └── util/
-│   │   │       ├── Constants.kt               # 常量定义
-│   │   │       ├── Extension.kt               # 扩展函数
-│   │   │       ├── Logger.kt                  # 日志封装
-│   │   │       └── PermissionHelper.kt        # 权限管理
+│   │   │       ├── WifiConnectionDetector.kt  # WiFi SSID 检测
+│   │   │       ├── Constants.kt
+│   │   │       └── PermissionHelper.kt
 │   │   ├── res/
 │   │   │   ├── layout/                        # XML 布局文件
 │   │   │   ├── navigation/                    # Navigation 图
-│   │   │   ├── menu/                          # 底部导航菜单
-│   │   │   ├── values/                        # 字符串、主题
-│   │   │   ├── drawable/                      # 图形资源
-│   │   │   └── xml/                           # USB 过滤器、网络安全
+│   │   │   └── values/                        # 字符串、主题
 │   │   └── AndroidManifest.xml
-│   ├── proguard-rules.pro                     # 混淆规则
 │   └── build.gradle.kts
 ├── docs/                                      # 项目文档
 │   ├── 需求分析文档.md
@@ -215,7 +189,6 @@ mjfly/
 │   └── 项目使用说明书.md
 ├── build.gradle.kts                           # 根构建配置
 ├── settings.gradle.kts                        # Gradle 设置
-├── gradle.properties                          # Gradle 属性
 └── gradle/wrapper/                            # Gradle Wrapper
 ```
 
@@ -233,8 +206,6 @@ mjfly/
 | `abiFilters` | arm64-v8a | 仅 64 位 ARM |
 | `viewBinding` | 启用 | |
 | `dataBinding` | 启用 | |
-| `useLegacyPackaging` | true | JNI 库打包 |
-| `extractNativeLibs` | true | 原生库提取 |
 
 ### DJI SDK 依赖
 
@@ -251,45 +222,70 @@ runtimeOnly("com.dji:dji-sdk-v5-networkImp:5.17.0")
 - `https://maven.aliyun.com/repository/public`
 - `https://dl.djicdn.com/repo/`
 
-### 已修复的兼容性问题
-
-| 问题 | 原因 | 修复 |
-|------|------|------|
-| VerifyError: SDKManager 构造函数 | Wire 4.9.2 与 DJI SDK 的 Wire 2.2.0 冲突 | 移除 wire-runtime:4.9.2 |
-| NoSuchMethodError: newEnumAdapter | wire-runtime 版本过高 | 使用 DJI SDK 传递的 2.2.0 |
-| 混淆导致 SDK 类损坏 | ProGuard 优化加密的 SDK 类 | proguard-rules.pro 完整保护 dji.** |
-| Debug 构建闪退 | minifyEnabled 在 debug 中开启 | debug 设为 false |
-
 ---
 
 ## 真机使用
 
-### 连接方式
+### 连接方式 (WiFi 直连)
 
 ```
-手机 ── USB OTG ── 遥控器 USB 口 ── 无人机
+手机 ── WiFi ── 无人机热点 (如 TELLO-XXXXXX)
 ```
 
-### 开机顺序（严格遵循）
+> 手机连接 Tello 无人机的 WiFi 热点即可，无需遥控器、无需 USB 线。
+
+### 使用步骤
 
 ```
-1. 先开遥控器（等待 30 秒启动完成）
-2. 再开无人机（等待 10 秒自检完成）
-3. 最后打开手机 App
+1. 开启 Tello 无人机（等待指示灯闪烁）
+2. 手机 WiFi 设置中连接 "TELLO-XXXXXX" 热点
+3. 打开 MJFLY App
+4. App 自动检测到无人机连接（显示"已连接"）
+5. 开始控制飞行
 ```
 
-### 关机顺序
+### 支持的 WiFi SSID 前缀
 
-```
-1. 先关无人机
-2. 再关遥控器
-3. 最后关闭手机 App
-```
+| 无人机型号 | SSID 前缀 |
+|-----------|-----------|
+| DJI Tello | `TELLO-` |
+| DJI Mini 3/4 Pro | `DJI Mini 3 Pro-` / `DJI Mini 4 Pro-` |
+| DJI Mavic Air | `Mavic Air-` |
+| DJI Air 2S | `Air2S_` |
+| DJI Avata | `Avata_` |
+| DJI Neo | `DJI Neo-` |
 
 ### 安全须知
 
 > 本应用直接控制真实无人机，所有飞行操作存在安全风险。
 > 请在空旷场地操作，远离人群和建筑物，遵守当地无人机管理法规。
+
+---
+
+## 通信协议
+
+### Tello UDP 协议
+
+| 端口 | 方向 | 用途 |
+|------|------|------|
+| **8889** | 手机 → Tello (192.168.10.1) | 发送控制命令 |
+| **8890** | Tello → 手机 (0.0.0.0) | 接收状态数据 |
+
+### 命令列表
+
+| 命令 | 说明 |
+|------|------|
+| `command` | 进入 SDK 模式（首次发送） |
+| `takeoff` | 起飞 |
+| `land` | 降落 |
+| `emergency` | 紧急停止电机 |
+| `rc a b c d` | 虚拟摇杆 (左右/前后/上下/偏航, -100~100) |
+
+### 状态数据格式
+
+```
+pitch:0;roll:0;yaw:0;vgx:0;vgy:0;vgz:0;templ:62;temph:65;tof:10;h:0;bat:87;baro:170.49;time:0;agx:-9.00;agy:-5.00;agz:-1002.00;
+```
 
 ---
 

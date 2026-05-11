@@ -3,14 +3,24 @@ package com.dmj.fly
 import android.app.Application
 import android.content.Context
 import android.util.Log
+import com.dmj.fly.util.WifiConnectionDetector
 import dagger.hilt.android.HiltAndroidApp
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 
 @HiltAndroidApp
 class FlyApplication : Application() {
 
     companion object {
         private const val TAG = "MJFLY"
+        lateinit var instance: FlyApplication
+            private set
+        val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Main)
     }
+
+    lateinit var wifiConnectionDetector: WifiConnectionDetector
+        private set
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
@@ -50,9 +60,16 @@ class FlyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         Log.d(TAG, "==============================")
         Log.d(TAG, "FlyApplication onCreate()")
         Log.d(TAG, "==============================")
+
+        // 初始化 WiFi 连接检测器（支持 WiFi 无人机）
+        wifiConnectionDetector = WifiConnectionDetector(this)
+        wifiConnectionDetector.startMonitoring(applicationScope)
+        Log.d(TAG, "WiFi 连接检测器已启动")
+
         // 通过反射延迟初始化 DJI SDK
         android.os.Handler(android.os.Looper.getMainLooper()).post {
             initDjiSdkByReflection()

@@ -21,6 +21,7 @@ import javax.inject.Inject
 data class ControlUiState(
     val connectionStatus: String = "未连接",
     val battery: Int = 0,
+    val temperature: Int = 0,
     val isFlying: Boolean = false,
     val isVirtualStickEnabled: Boolean = false,
     val needLandingConfirmation: Boolean = false
@@ -56,12 +57,16 @@ class ControlViewModel @Inject constructor(
                 Pair(connectionState, status)
             }.collect { (connectionState, status) ->
                 val statusText = when (connectionState) {
-                    is ConnectionState.Connected -> "已连接 (ID: ${connectionState.productId})"
-                    is ConnectionState.Disconnected -> "未连接"
+                    is ConnectionState.Connected -> {
+                        val ssid = connectionState.ssid
+                        if (ssid != null) "已连接 (WiFi: $ssid)" else "已连接 (WiFi)"
+                    }
+                    is ConnectionState.Disconnected -> "未连接 - 请连接无人机WiFi"
                 }
                 _uiState.value = _uiState.value.copy(
                     connectionStatus = statusText,
                     battery = status.batteryPercentage,
+                    temperature = status.temperature,
                     isFlying = status.isFlying
                 )
             }

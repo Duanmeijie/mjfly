@@ -38,12 +38,14 @@ class ControlFragment : Fragment() {
     }
 
     private fun setupVirtualSticks() {
+        // 左摇杆：上下=上升/下降(throttle)，左右=左转/右转(yaw)
         binding.virtualStickLeft.onStickChanged = { x, y ->
-            viewModel.updateVirtualStickData(0f, 0f, x, y)
+            viewModel.updateVirtualStickData(0f, 0f, x, -y)
         }
 
+        // 右摇杆：上下=前进/后退(pitch)，左右=左移/右移(roll)
         binding.virtualStickRight.onStickChanged = { x, y ->
-            viewModel.updateVirtualStickData(y, x, 0f, 0f)
+            viewModel.updateVirtualStickData(-y, x, 0f, 0f)
         }
     }
 
@@ -65,8 +67,9 @@ class ControlFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.uiState.collect { state ->
-                    binding.textConnectionStatus.text = "连接状态: ${state.connectionStatus}"
-                    binding.textBattery.text = "电量: ${state.battery}%"
+                    binding.textConnectionStatus.text = state.connectionStatus
+                    binding.textBattery.text = "\uD83D\uDD0B ${state.battery}%"
+                    binding.textTemperature.text = "\uD83C\uDF21 ${state.temperature}\u00B0C"
                     binding.btnVirtualStick.text = if (state.isVirtualStickEnabled) "关闭摇杆" else "开启摇杆"
 
                     if (state.needLandingConfirmation) {

@@ -30,8 +30,11 @@ class FpvViewModel @Inject constructor(
         viewModelScope.launch {
             DjiSdkManager.connectionState.collect { state ->
                 _connectionStatus.value = when (state) {
-                    is ConnectionState.Connected -> "已连接 (ID: ${state.productId})"
-                    is ConnectionState.Disconnected -> "未连接"
+                    is ConnectionState.Connected -> {
+                        val ssid = state.ssid
+                        if (ssid != null) "已连接 (WiFi: $ssid)" else "已连接 (WiFi)"
+                    }
+                    is ConnectionState.Disconnected -> "未连接 - 请连接无人机WiFi"
                 }
             }
         }

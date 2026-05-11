@@ -5,6 +5,7 @@ data class AircraftStatus(
     val flightMode: String = "",
     val gpsSignalLevel: Int = 0,
     val batteryPercentage: Int = 0,
+    val temperature: Int = 0,
     val isFlying: Boolean = false,
     val isMotorsOn: Boolean = false,
     val flightTime: Long = 0L,

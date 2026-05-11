@@ -2,9 +2,9 @@ package com.dmj.fly.di
 
 import com.dmj.fly.data.repository.AircraftRepositoryImpl
 import com.dmj.fly.data.repository.CameraRepositoryImpl
-import com.dmj.fly.data.repository.FlightControlRepositoryImpl
 import com.dmj.fly.data.repository.LiveStreamRepositoryImpl
 import com.dmj.fly.data.repository.MediaRepositoryImpl
+import com.dmj.fly.data.repository.TelloFlightControlRepository
 import com.dmj.fly.domain.repository.AircraftRepository
 import com.dmj.fly.domain.repository.CameraRepository
 import com.dmj.fly.domain.repository.FlightControlRepository
@@ -26,7 +26,7 @@ abstract class AppModule {
 
     @Binds
     @Singleton
-    abstract fun bindFlightControlRepository(impl: FlightControlRepositoryImpl): FlightControlRepository
+    abstract fun bindFlightControlRepository(impl: TelloFlightControlRepository): FlightControlRepository
 
     @Binds
     @Singleton

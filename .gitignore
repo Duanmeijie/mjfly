@@ -28,3 +28,28 @@ out/
 # Android Studio
 *.apk
 *.aab
+
+# Extracted build artifacts
+app/DebugProbesKt.bin
+app/META-INF/
+app/kotlin/
+app/okhttp3/
+
+# Log and debug files
+build_log.txt
+build_stderr.txt
+build_stdout.txt
+crash_log.txt
+fresh_logcat.txt
+full_logcat.txt
+success_logcat.txt
+
+# Null device file (Windows)
+nul
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Duplicate docs
+docs/requirement/

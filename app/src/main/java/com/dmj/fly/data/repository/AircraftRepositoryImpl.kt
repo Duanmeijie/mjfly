@@ -1,11 +1,15 @@
 package com.dmj.fly.data.repository
 
-import com.dmj.fly.data.datasource.msdk.KeyManagerHelper
+import com.dmj.fly.data.datasource.tello.TelloStateReceiver
 import com.dmj.fly.domain.model.AircraftStatus
 import com.dmj.fly.domain.model.FlightTelemetry
 import com.dmj.fly.domain.repository.AircraftRepository
+import com.dmj.fly.sdk.ConnectionState
+import com.dmj.fly.sdk.DjiSdkManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -13,87 +17,59 @@ import javax.inject.Singleton
 
 @Singleton
 class AircraftRepositoryImpl @Inject constructor(
-    private val keyManagerHelper: KeyManagerHelper
+    private val telloStateReceiver: TelloStateReceiver
 ) : AircraftRepository {
 
-    private val _mockConnectionState = MutableStateFlow(false)
-    private val _mockFlightMode = MutableStateFlow("P-GPS")
-    private val _mockGpsSignal = MutableStateFlow(5)
-    private val _mockBattery = MutableStateFlow(100)
-    private val _mockIsFlying = MutableStateFlow(false)
-    private val _mockMotorsOn = MutableStateFlow(false)
-    private val _mockFlightTime = MutableStateFlow(0L)
-    private val _mockLatitude = MutableStateFlow(0.0)
-    private val _mockLongitude = MutableStateFlow(0.0)
-    private val _mockAltitude = MutableStateFlow(0.0)
+    private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
+
+    // 使用真实连接状态
+    private val _connectionState: Flow<Boolean> = DjiSdkManager.connectionState.map { state ->
+        state is ConnectionState.Connected
+    }
+
+    init {
+        // 启动 Tello 状态接收
+        telloStateReceiver.startReceiving(scope)
+    }
 
     override fun getAircraftStatus(): Flow<AircraftStatus> {
         return combine(
-            _mockConnectionState,
-            _mockFlightMode,
-            _mockGpsSignal,
-            _mockBattery,
-            _mockIsFlying,
-            _mockMotorsOn,
-            _mockFlightTime,
-            _mockLatitude,
-            _mockLongitude,
-            _mockAltitude
-        ) { values ->
+            _connectionState,
+            telloStateReceiver.state
+        ) { connected, telloState ->
             AircraftStatus(
-                isConnected = values[0] as Boolean,
-                flightMode = values[1] as String,
-                gpsSignalLevel = values[2] as Int,
-                batteryPercentage = values[3] as Int,
-                isFlying = values[4] as Boolean,
-                isMotorsOn = values[5] as Boolean,
-                flightTime = values[6] as Long,
-                latitude = values[7] as Double,
-                longitude = values[8] as Double,
-                altitude = values[9] as Double
+                isConnected = connected,
+                flightMode = if (telloState.height > 0) "Flying" else "Idle",
+                gpsSignalLevel = 0,
+                batteryPercentage = telloState.battery,
+                temperature = telloState.temperature,
+                isFlying = telloState.height > 0,
+                isMotorsOn = telloState.height > 0,
+                flightTime = telloState.flightTime.toLong(),
+                altitude = telloState.height.toDouble(),
+                latitude = 0.0,
+                longitude = 0.0
             )
         }
     }
 
     override fun getTelemetry(): Flow<FlightTelemetry> {
-        return combine(
-            _mockLatitude,
-            _mockLongitude,
-            _mockAltitude
-        ) { lat, lon, alt ->
+        return telloStateReceiver.state.map { telloState ->
             FlightTelemetry(
-                latitude = lat,
-                longitude = lon,
-                relativeAltitude = alt.toFloat(),
-                ultrasonicHeight = 0f,
+                latitude = 0.0,
+                longitude = 0.0,
+                relativeAltitude = telloState.height.toFloat(),
+                ultrasonicHeight = telloState.tofDistance.toFloat(),
                 takeoffAltitude = 0f,
-                pitch = 0f,
-                roll = 0f,
-                yaw = 0f,
-                velocityX = 0f,
-                velocityY = 0f,
-                velocityZ = 0f
+                pitch = telloState.pitch.toFloat(),
+                roll = telloState.roll.toFloat(),
+                yaw = telloState.yaw.toFloat(),
+                velocityX = telloState.speedX.toFloat(),
+                velocityY = telloState.speedY.toFloat(),
+                velocityZ = telloState.speedZ.toFloat()
             )
         }
     }
 
-    override fun getConnectionState(): Flow<Boolean> = _mockConnectionState
-
-    fun updateConnectionState(connected: Boolean) {
-        _mockConnectionState.value = connected
-    }
-
-    fun updateFlightMode(mode: String) {
-        _mockFlightMode.value = mode
-    }
-
-    fun updateBattery(percentage: Int) {
-        _mockBattery.value = percentage
-    }
-
-    fun updateLocation(lat: Double, lon: Double, alt: Double) {
-        _mockLatitude.value = lat
-        _mockLongitude.value = lon
-        _mockAltitude.value = alt
-    }
+    override fun getConnectionState(): Flow<Boolean> = _connectionState
 }

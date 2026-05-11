@@ -3,84 +3,241 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="#1A1A2E"
+    android:padding="12dp">
 
-    <TextView
-        android:id="@+id/textConnectionStatus"
-        android:layout_width="wrap_content"
+    <!-- Top Status Bar -->
+    <LinearLayout
+        android:id="@+id/statusBar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="连接状态: 未连接"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/status_bar_bg"
+        android:padding="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/textBattery"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="电量: 0%"
-        app:layout_constraintStart_toEndOf="@id/textConnectionStatus"
-        app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/textConnectionStatus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:text="未连接"
+            android:textColor="#4CAF50"
+            android:textSize="13sp"
+            android:singleLine="true"
+            android:ellipsize="end" />
 
-    <com.dmj.fly.ui.widget.VirtualStickView
-        android:id="@+id/virtualStickLeft"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        <TextView
+            android:id="@+id/textBattery"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="\uD83D\uDD0B 0%"
+            android:textColor="#FFEB3B"
+            android:textSize="13sp"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/textTemperature"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="\uD83C\uDF21 0\u00B0C"
+            android:textColor="#FF9800"
+            android:textSize="13sp"
+            android:gravity="end" />
+
+    </LinearLayout>
+
+    <!-- Left Stick Area -->
+    <FrameLayout
+        android:id="@+id/leftStickArea"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@id/buttonPanel"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textConnectionStatus" />
+        app:layout_constraintTop_toBottomOf="@id/statusBar">
 
-    <com.dmj.fly.ui.widget.VirtualStickView
-        android:id="@+id/virtualStickRight"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        <!-- Direction Labels for Left Stick -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:text="上升"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:text="下降"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="左转"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:text="右转"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <com.dmj.fly.ui.widget.VirtualStickView
+            android:id="@+id/virtualStickLeft"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <!-- Left Stick Title -->
+    <TextView
+        android:id="@+id/labelLeftStick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="油门/偏航"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/leftStickArea"
+        app:layout_constraintStart_toStartOf="@id/leftStickArea"
+        app:layout_constraintTop_toBottomOf="@id/leftStickArea" />
+
+    <!-- Right Stick Area -->
+    <FrameLayout
+        android:id="@+id/rightStickArea"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         app:layout_constraintBottom_toTopOf="@id/buttonPanel"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textBattery" />
+        app:layout_constraintTop_toBottomOf="@id/statusBar">
 
+        <!-- Direction Labels for Right Stick -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:text="前进"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:text="后退"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|start"
+            android:text="左移"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:text="右移"
+            android:textColor="#AAAAAA"
+            android:textSize="11sp" />
+
+        <com.dmj.fly.ui.widget.VirtualStickView
+            android:id="@+id/virtualStickRight"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:layout_gravity="center" />
+
+    </FrameLayout>
+
+    <!-- Right Stick Title -->
+    <TextView
+        android:id="@+id/labelRightStick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="俯仰/横滚"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/rightStickArea"
+        app:layout_constraintStart_toStartOf="@id/rightStickArea"
+        app:layout_constraintTop_toBottomOf="@id/rightStickArea" />
+
+    <!-- Button Panel -->
     <LinearLayout
         android:id="@+id/buttonPanel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btnTakeOff"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="起飞" />
+            android:layout_marginEnd="4dp"
+            android:text="起飞"
+            android:textColor="#4CAF50" />
 
         <Button
             android:id="@+id/btnLand"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="降落" />
+            android:layout_marginEnd="4dp"
+            android:text="降落"
+            android:textColor="#2196F3" />
 
         <Button
             android:id="@+id/btnRth"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="返航" />
+            android:layout_marginEnd="4dp"
+            android:text="返航"
+            android:textColor="#FF9800" />
 
         <Button
             android:id="@+id/btnVirtualStick"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="虚拟摇杆" />
+            android:layout_marginEnd="4dp"
+            android:text="摇杆"
+            android:textColor="#9C27B0" />
 
         <Button
             android:id="@+id/btnEmergencyStop"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="紧急停止" />
+            android:backgroundTint="#F44336"
+            android:text="急停"
+            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 
