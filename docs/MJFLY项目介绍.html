@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MJFLY 项目介绍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 100%);
+            color: #FFFFFF;
+        }
+
+        .slide {
+            width: 1280px;
+            height: 720px;
+            margin: 40px auto;
+            padding: 60px 80px;
+            background: linear-gradient(135deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            page-break-after: always;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(78, 204, 163, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-title {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4ECDC4;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #4ECDC4;
+            padding-bottom: 15px;
+        }
+
+        .slide-subtitle {
+            font-size: 28px;
+            color: #95A5A6;
+            margin-bottom: 40px;
+        }
+
+        .slide-content {
+            font-size: 22px;
+            line-height: 1.8;
+        }
+
+        .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide-content li {
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .slide-content li::before {
+            content: '▸';
+            color: #4ECDC4;
+            position: absolute;
+            left: 0;
+            font-size: 24px;
+        }
+
+        .highlight {
+            color: #4ECDC4;
+            font-weight: bold;
+        }
+
+        .warning {
+            color: #FF6B6B;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: rgba(78, 204, 163, 0.1);
+            border-left: 4px solid #4ECDC4;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(78, 204, 163, 0.3);
+        }
+
+        .card-title {
+            font-size: 24px;
+            color: #4ECDC4;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .card-content {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            font-size: 18px;
+        }
+
+        th {
+            background: rgba(78, 204, 163, 0.2);
+            color: #4ECDC4;
+            padding: 15px;
+            text-align: left;
+            border-bottom: 2px solid #4ECDC4;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        tr:hover {
+            background: rgba(78, 204, 163, 0.05);
+        }
+
+        .screenshot-placeholder {
+            background: rgba(0, 0, 0, 0.3);
+            border: 2px dashed #4ECDC4;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screenshot-placeholder p {
+            color: #95A5A6;
+            font-size: 18px;
+        }
+
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 16px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 30px;
+            left: 80px;
+            right: 80px;
+            text-align: center;
+            color: #95A5A6;
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 15px;
+        }
+
+        .slide-number {
+            position: absolute;
+            bottom: 30px;
+            right: 80px;
+            color: #95A5A6;
+            font-size: 14px;
+        }
+
+        /* Title Slide */
+        .title-slide {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .title-slide .main-title {
+            font-size: 72px;
+            font-weight: bold;
+            color: #4ECDC4;
+            margin-bottom: 30px;
+            text-shadow: 0 4px 20px rgba(78, 204, 163, 0.5);
+        }
+
+        .title-slide .sub-title {
+            font-size: 32px;
+            color: #95A5A6;
+            margin-bottom: 50px;
+        }
+
+        .title-slide .meta-info {
+            font-size: 20px;
+            color: #7F8C8D;
+        }
+
+        .icon-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .icon-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .icon-circle {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(78, 204, 163, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .architecture-diagram {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .arch-layer {
+            background: rgba(78, 204, 163, 0.1);
+            border: 1px solid rgba(78, 204, 163, 0.3);
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .arch-arrow {
+            text-align: center;
+            font-size: 24px;
+            color: #4ECDC4;
+            margin: 5px 0;
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .slide {
+                margin: 0;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 1: 封面 -->
+    <div class="slide title-slide">
+        <div class="main-title">MJFLY</div>
+        <div class="sub-title">DJI Tello 无人机 WiFi 直控应用</div>
+        <div class="meta-info">
+            <p>基于 Android 平台 | DJI SDK V5 | UDP 协议</p>
+            <p>版本 1.1 | 2026年5月</p>
+        </div>
+        <div class="footer">MJFLY 项目介绍</div>
+    </div>
+
+    <!-- Slide 2: 项目概述 -->
+    <div class="slide">
+        <h2 class="slide-title">项目概述</h2>
+        <div class="slide-content">
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">项目定位</h3>
+                    <ul>
+                        <li>支持 <span class="highlight">WiFi 直连</span> 控制 DJI Tello 无人机</li>
+                        <li>手机连接无人机热点即可控制</li>
+                        <li><span class="highlight">无需遥控器</span>、无需 USB 线</li>
+                        <li>保留 DJI SDK V5 框架支持扩展</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">核心特性</h3>
+                    <ul>
+                        <li>一键起飞 / 降落</li>
+                        <li>屏幕双虚拟摇杆操控</li>
+                        <li>实时电量 / 温度监控</li>
+                        <li>WiFi 自动检测连接</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 30px;">
+                <strong>技术栈：</strong>Kotlin 2.1.0 | Android API 24+ | DJI SDK V5 5.17.0 | Hilt 2.52 | MVVM 架构
+            </div>
+        </div>
+        <div class="slide-number">2 / 15</div>
+    </div>
+
+    <!-- Slide 3: App 主界面截图 -->
+    <div class="slide">
+        <h2 class="slide-title">App 主界面</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">MJFLY 采用底部导航栏设计，包含 5 个主要功能页面：</p>
+            <div class="screenshot-placeholder">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">📱 [截图位置]</p>
+                    <p>请插入 App 主界面截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示底部导航栏：FPV | 控制 | 遥测 | 相机 | 媒体</p>
+                </div>
+            </div>
+            <div class="three-column" style="margin-top: 20px;">
+                <div class="card">
+                    <div class="card-title">导航结构</div>
+                    <div class="card-content">
+                        底部 5 个 Tab 切换<br>
+                        横屏布局设计
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">页面列表</div>
+                    <div class="card-content">
+                        FPV / 控制 / 遥测<br>
+                        相机 / 媒体
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">设计特点</div>
+                    <div class="card-content">
+                        深色主题 #1A1A2E<br>
+                        Material Design 组件
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">3 / 15</div>
+    </div>
+
+    <!-- Slide 4: 飞行控制界面 -->
+    <div class="slide">
+        <h2 class="slide-title">飞行控制界面</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">核心飞行控制页面，提供双虚拟摇杆和功能按钮：</p>
+            <div class="screenshot-placeholder">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">🎮 [截图位置]</p>
+                    <p>请插入飞行控制界面截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示双摇杆、状态栏、起飞/降落/返航/摇杆/急停按钮</p>
+                </div>
+            </div>
+            <div class="two-column" style="margin-top: 20px;">
+                <div class="card">
+                    <div class="card-title">顶部状态栏</div>
+                    <div class="card-content">
+                        <ul style="margin-top: 10px;">
+                            <li>WiFi 连接状态（SSID 显示）</li>
+                            <li>🔋 电池电量百分比</li>
+                            <li>🌡 温度显示（°C）</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">底部控制按钮</div>
+                    <div class="card-content">
+                        <ul style="margin-top: 10px;">
+                            <li><span class="highlight">起飞</span> / <span class="highlight">降落</span> / <span class="highlight">返航</span></li>
+                            <li>摇杆启用/禁用</li>
+                            <li><span class="warning">急停</span>（红色按钮）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">4 / 15</div>
+    </div>
+
+    <!-- Slide 5: 虚拟摇杆 -->
+    <div class="slide">
+        <h2 class="slide-title">虚拟摇杆控制</h2>
+        <div class="slide-content">
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">左摇杆 - 油门/偏航</h3>
+                    <ul>
+                        <li><span class="highlight">Y 轴</span>：上升 / 下降（油门）</li>
+                        <li><span class="highlight">X 轴</span>：左转 / 右转（偏航）</li>
+                        <li>控制无人机高度和朝向</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">右摇杆 - 俯仰/横滚</h3>
+                    <ul>
+                        <li><span class="highlight">Y 轴</span>：前进 / 后退（俯仰）</li>
+                        <li><span class="highlight">X 轴</span>：左移 / 右移（横滚）</li>
+                        <li>控制无人机飞行方向</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="screenshot-placeholder" style="margin-top: 30px;">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">🕹️ [截图位置]</p>
+                    <p>请插入虚拟摇杆操作截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示摇杆控件及方向标签（上升/下降/前进/后退等）</p>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>技术参数：</strong>摇杆值归一化 -1.0 ~ +1.0 → 映射为 -100 ~ +100 → 发送频率 20Hz（每 50ms）
+            </div>
+        </div>
+        <div class="slide-number">5 / 15</div>
+    </div>
+
+    <!-- Slide 6: 遥测数据界面 -->
+    <div class="slide">
+        <h2 class="slide-title">遥测数据界面</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">实时显示飞行器状态和遥测数据：</p>
+            <div class="screenshot-placeholder">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">📊 [截图位置]</p>
+                    <p>请插入遥测数据界面截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示飞行器状态和飞行遥测两个部分的数据</p>
+                </div>
+            </div>
+            <div class="two-column" style="margin-top: 20px;">
+                <div class="card">
+                    <div class="card-title">飞行器状态</div>
+                    <div class="card-content">
+                        <ul style="margin-top: 10px;">
+                            <li>连接状态（已连接/未连接）</li>
+                            <li>飞行模式</li>
+                            <li>电池电量百分比</li>
+                            <li>GPS 信号等级</li>
+                            <li>飞行状态（飞行中/未飞行）</li>
+                            <li>电机状态（开启/关闭）</li>
+                            <li>飞行时间（秒）</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">飞行遥测数据</div>
+                    <div class="card-content">
+                        <ul style="margin-top: 10px;">
+                            <li>GPS 坐标（经纬度）</li>
+                            <li>相对高度（米）</li>
+                            <li>超声波高度（ToF 传感器）</li>
+                            <li>起飞高度</li>
+                            <li>姿态角（俯仰/横滚/偏航）</li>
+                            <li>速度向量（X/Y/Z 三轴）</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">6 / 15</div>
+    </div>
+
+    <!-- Slide 7: FPV 界面 -->
+    <div class="slide">
+        <h2 class="slide-title">FPV 第一人称视角</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">实时视频流显示与快捷控制：</p>
+            <div class="screenshot-placeholder">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">🎥 [截图位置]</p>
+                    <p>请插入 FPV 界面截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示视频流画面、拍照/录像/起飞/降落按钮</p>
+                </div>
+            </div>
+            <div class="three-column" style="margin-top: 20px;">
+                <div class="card">
+                    <div class="card-title">视频流</div>
+                    <div class="card-content">
+                        TextureView 显示<br>
+                        实时摄像头画面
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">快捷按钮</div>
+                    <div class="card-content">
+                        拍照 / 录像<br>
+                        起飞 / 降落
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">状态显示</div>
+                    <div class="card-content">
+                        连接状态覆盖层<br>
+                        半透明背景
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">7 / 15</div>
+    </div>
+
+    <!-- Slide 8: 通信协议 -->
+    <div class="slide">
+        <h2 class="slide-title">Tello UDP 通信协议</h2>
+        <div class="slide-content">
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">端口配置</h3>
+                    <table>
+                        <tr>
+                            <th>端口</th>
+                            <th>方向</th>
+                            <th>用途</th>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">8889</span></td>
+                            <td>手机 → Tello</td>
+                            <td>发送控制命令</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">8890</span></td>
+                            <td>Tello → 手机</td>
+                            <td>接收状态数据</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">核心命令</h3>
+                    <div class="code-block">
+command      # 进入 SDK 模式<br>
+takeoff      # 起飞<br>
+land         # 降落<br>
+emergency    # 紧急停止<br>
+rc a b c d   # 虚拟摇杆
+                    </div>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 30px;">
+                <strong>状态数据格式：</strong><br>
+                <span class="code-block" style="margin-top: 10px;">
+pitch:0;roll:0;yaw:0;vgx:0;vgy:0;vgz:0;templ:62;temph:65;tof:10;h:0;bat:87;baro:170.49;time:0;agx:-9.00;agy:-5.00;agz:-1002.00;
+                </span>
+            </div>
+            <div style="margin-top: 20px;">
+                <p><span class="highlight">17 个数据字段</span>实时解析：姿态角、速度、温度、高度、电量、飞行时间、加速度</p>
+            </div>
+        </div>
+        <div class="slide-number">8 / 15</div>
+    </div>
+
+    <!-- Slide 9: 系统架构 -->
+    <div class="slide">
+        <h2 class="slide-title">系统架构设计</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">采用 <span class="highlight">MVVM + Repository</span> 分层架构：</p>
+            <div class="architecture-diagram">
+                <div class="arch-layer">
+                    <strong>UI Layer</strong> - MainActivity + Fragments + VirtualStickView<br>
+                    <small>（ViewBinding, Navigation Component）</small>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>ViewModel Layer</strong> - ControlViewModel, FpvViewModel, TelemetryViewModel<br>
+                    <small>（StateFlow, Coroutine, MVVM）</small>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>Repository Layer</strong> - AircraftRepositoryImpl, TelloFlightControlRepository<br>
+                    <small>（接口 + 实现分离）</small>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>数据源层</strong> - TelloStateReceiver, WifiConnectionDetector, DjiSdkManager<br>
+                    <small>（UDP 8890 状态监听, SSID 检测）</small>
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>通信协议层</strong> - Tello UDP 文本协议<br>
+                    <small>命令端口 192.168.10.1:8889 | 状态端口 0.0.0.0:8890</small>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">9 / 15</div>
+    </div>
+
+    <!-- Slide 10: 数据流 -->
+    <div class="slide">
+        <h2 class="slide-title">数据流设计</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">基于 Kotlin <span class="highlight">StateFlow</span> 的响应式数据流：</p>
+            <div class="architecture-diagram">
+                <div class="arch-layer">
+                    <strong>TelloStateReceiver</strong><br>
+                    UDP 8890 端口监听 → 解析状态字符串 → MutableStateFlow&lt;TelloState&gt;
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>AircraftRepositoryImpl</strong><br>
+                    combine WiFi 连接状态 + TelloState → 映射为 AircraftStatus / FlightTelemetry
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>ControlViewModel</strong><br>
+                    组合连接状态 + 飞行器数据 → ControlUiState (StateFlow)
+                </div>
+                <div class="arch-arrow">↓</div>
+                <div class="arch-layer">
+                    <strong>ControlFragment</strong><br>
+                    lifecycleScope.collectIn → UI 实时更新
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>关键特性：</strong>所有 I/O 操作运行在 Dispatchers.IO | 状态更新自动响应到 UI | Fragment 生命周期感知
+            </div>
+        </div>
+        <div class="slide-number">10 / 15</div>
+    </div>
+
+    <!-- Slide 11: WiFi 连接检测 -->
+    <div class="slide">
+        <h2 class="slide-title">WiFi 连接检测</h2>
+        <div class="slide-content">
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">检测机制</h3>
+                    <ul>
+                        <li>使用 Android <span class="highlight">WifiManager</span> API</li>
+                        <li>每 <span class="highlight">2 秒</span>检测一次 SSID</li>
+                        <li>前缀匹配多机型支持</li>
+                        <li>StateFlow<Boolean> 驱动状态更新</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">支持的 SSID 前缀</h3>
+                    <div class="card">
+                        <div class="card-content">
+                            TELLO-<br>
+                            DJI Mini 3 Pro- / DJI Mini 4 Pro-<br>
+                            Mavic Air- / Air2S_<br>
+                            Avata_ / DJI FPV<br>
+                            DJI Neo-
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="screenshot-placeholder" style="margin-top: 30px;">
+                <div>
+                    <p style="font-size: 24px; color: #4ECDC4; margin-bottom: 15px;">📶 [截图位置]</p>
+                    <p>请插入 WiFi 连接检测界面截图</p>
+                    <p style="font-size: 16px; margin-top: 10px;">显示连接状态从"未连接"变为"已连接: TELLO-XXXXXX"</p>
+                </div>
+            </div>
+        </div>
+        <div class="slide-number">11 / 15</div>
+    </div>
+
+    <!-- Slide 12: 依赖注入 -->
+    <div class="slide">
+        <h2 class="slide-title">依赖注入 (Hilt)</h2>
+        <div class="slide-content">
+            <p style="margin-bottom: 20px;">使用 <span class="highlight">Hilt 2.52</span> 进行依赖注入，实现组件解耦：</p>
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">注入注解</h3>
+                    <div class="code-block">
+@AndroidEntryPoint     // Fragment 注入点<br>
+@HiltViewModel         // ViewModel 注入<br>
+@Inject constructor()  // 构造函数注入<br>
+@Singleton             // 单例作用域<br>
+@Module @InstallIn(    // 模块安装<br>
+  SingletonComponent::class<br>
+)
+                    </div>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">绑定关系</h3>
+                    <table>
+                        <tr>
+                            <th>接口</th>
+                            <th>实现</th>
+                        </tr>
+                        <tr>
+                            <td>FlightControlRepository</td>
+                            <td>TelloFlightControlRepository</td>
+                        </tr>
+                        <tr>
+                            <td>AircraftRepository</td>
+                            <td>AircraftRepositoryImpl</td>
+                        </tr>
+                        <tr>
+                            <td>CameraRepository</td>
+                            <td>CameraRepositoryImpl</td>
+                        </tr>
+                        <tr>
+                            <td>MediaRepository</td>
+                            <td>MediaRepositoryImpl</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>优势：</strong>所有 Repository 为单例 | ViewModel 自动注入 | 便于测试和替换实现
+            </div>
+        </div>
+        <div class="slide-number">12 / 15</div>
+    </div>
+
+    <!-- Slide 13: 技术栈 -->
+    <div class="slide">
+        <h2 class="slide-title">技术栈总览</h2>
+        <div class="slide-content">
+            <div class="two-column">
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">核心框架</h3>
+                    <table>
+                        <tr>
+                            <th>技术</th>
+                            <th>版本</th>
+                            <th>用途</th>
+                        </tr>
+                        <tr>
+                            <td>Kotlin</td>
+                            <td>2.1.0</td>
+                            <td>开发语言</td>
+                        </tr>
+                        <tr>
+                            <td>AGP</td>
+                            <td>8.8.0</td>
+                            <td>构建插件</td>
+                        </tr>
+                        <tr>
+                            <td>Gradle</td>
+                            <td>8.10.2</td>
+                            <td>构建工具</td>
+                        </tr>
+                        <tr>
+                            <td>JDK</td>
+                            <td>17</td>
+                            <td>Java 运行时</td>
+                        </tr>
+                    </table>
+                </div>
+                <div>
+                    <h3 style="color: #4ECDC4; margin-bottom: 15px;">Android 库</h3>
+                    <table>
+                        <tr>
+                            <th>库</th>
+                            <th>版本</th>
+                            <th>用途</th>
+                        </tr>
+                        <tr>
+                            <td>AndroidX Core</td>
+                            <td>1.12.0</td>
+                            <td>核心兼容</td>
+                        </tr>
+                        <tr>
+                            <td>Material</td>
+                            <td>1.11.0</td>
+                            <td>UI 组件</td>
+                        </tr>
+                        <tr>
+                            <td>Lifecycle VM</td>
+                            <td>2.7.0</td>
+                            <td>MVVM</td>
+                        </tr>
+                        <tr>
+                            <td>Navigation</td>
+                            <td>2.7.6</td>
+                            <td>页面导航</td>
+                        </tr>
+                        <tr>
+                            <td>Hilt</td>
+                            <td>2.52</td>
+                            <td>依赖注入</td>
+                        </tr>
+                        <tr>
+                            <td>Coroutines</td>
+                            <td>1.7.3</td>
+                            <td>协程</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 20px;">
+                <strong>DJI SDK V5 5.17.0</strong> | 仅支持 arm64-v8a | 最低 Android 7.0 (API 24) | 目标 Android 14 (API 34)
+            </div>
+        </div>
+        <div class="slide-number">13 / 15</div>
+    </div>
+
+    <!-- Slide 14: 项目结构 -->
+    <div class="slide">
+        <h2 class="slide-title">项目结构</h2>
+        <div class="slide-content">
+            <div class="code-block" style="font-size: 14px; max-height: 520px; overflow-y: auto;">
+mjfly/<br>
+├── app/src/main/java/com/dmj/fly/<br>
+│   ├── FlyApplication.kt                    # 应用入口，WiFi 检测初始化<br>
+│   ├── sdk/<br>
+│   │   └── DjiSdkManager.kt                 # SDK 状态管理 + WiFi 监控<br>
+│   ├── di/<br>
+│   │   └── AppModule.kt                     # Hilt 依赖注入模块<br>
+│   ├── data/<br>
+│   │   ├── datasource/<br>
+│   │   │   ├── tello/<br>
+│   │   │   │   └── TelloStateReceiver.kt    # Tello UDP 8890 状态接收<br>
+│   │   │   └── msdk/KeyManagerHelper.kt     # SDK Key 管理<br>
+│   │   └── repository/<br>
+│   │       ├── AircraftRepositoryImpl.kt    # 飞行器状态（Tello 数据）<br>
+│   │       ├── TelloFlightControlRepository.kt # Tello UDP 飞行控制<br>
+│   │       ├── FlightControlRepositoryImpl.kt  # DJI SDK 飞行控制<br>
+│   │       ├── CameraRepositoryImpl.kt      # 相机控制<br>
+│   │       └── MediaRepositoryImpl.kt       # 媒体管理<br>
+│   ├── domain/<br>
+│   │   ├── model/                           # 数据模型（AircraftStatus 等）<br>
+│   │   └── repository/                      # 领域接口定义<br>
+│   ├── ui/<br>
+│   │   ├── MainActivity.kt                  # 主界面，权限管理<br>
+│   │   ├── fpv/FpvFragment.kt               # FPV 第一人称视角<br>
+│   │   ├── control/ControlFragment.kt       # 飞行控制面板<br>
+│   │   ├── telemetry/TelemetryFragment.kt   # 遥测数据展示<br>
+│   │   ├── camera/CameraFragment.kt         # 相机控制<br>
+│   │   ├── media/MediaFragment.kt           # 媒体文件管理<br>
+│   │   └── widget/VirtualStickView.kt       # 自定义虚拟摇杆控件<br>
+│   └── util/<br>
+│       ├── WifiConnectionDetector.kt        # WiFi SSID 检测<br>
+│       ├── PermissionHelper.kt              # 权限管理<br>
+│       └── Logger.kt                        # 日志工具<br>
+└── docs/                                    # 项目文档<br>
+    ├── 需求分析文档.md<br>
+    ├── 测试文档.md<br>
+    └── 项目使用说明书.md
+            </div>
+        </div>
+        <div class="slide-number">14 / 15</div>
+    </div>
+
+    <!-- Slide 15: 总结 -->
+    <div class="slide title-slide">
+        <div class="main-title" style="font-size: 56px;">总结</div>
+        <div class="sub-title">让每一次飞行都安全可控</div>
+        <div class="slide-content" style="text-align: left; max-width: 800px;">
+            <div class="icon-list">
+                <div class="icon-item">
+                    <div class="icon-circle">✈️</div>
+                    <div>WiFi 直连，无需遥控器</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">🎮</div>
+                    <div>双虚拟摇杆精准操控</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">📊</div>
+                    <div>17 项实时遥测数据</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">🔒</div>
+                    <div>紧急停止安全保障</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">🏗️</div>
+                    <div>MVVM + Repository 架构</div>
+                </div>
+                <div class="icon-item">
+                    <div class="icon-circle">⚡</div>
+                    <div>Kotlin 协程响应式数据流</div>
+                </div>
+            </div>
+        </div>
+        <div class="footer" style="position: relative; border: none; margin-top: 40px;">
+            <p>MJFLY v1.1 | DJI Tello WiFi 直控应用</p>
+        </div>
+        <div class="slide-number">15 / 15</div>
+    </div>
+</body>
+</html>
